@@ -1,0 +1,11 @@
+php7.2:
+  image: php:7.2-alpine
+  script:
+    - composer build
+
+before_script:
+  - apk --update add wget curl git
+  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+  - php -v
+  - composer --version
+  - docker-php-ext-install json
