@@ -14,20 +14,22 @@ class GetSpecificDateTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $countries = file_get_contents(__DIR__ . '/data/countries.config');
+        $countries = file_get_contents(__DIR__ . '/data/supportedCountries.json');
         $this->availableCountries = json_decode((string)$countries);
     }
 
     public function testSimpleCall()
     {
-        foreach ($this->availableCountries as $code) {
+        foreach ($this->availableCountries as $item) {
             $randomDate = Carbon::today()->addDays(random_int(1, 99));
             $url = 'https://api.abalin.net/get/namedays?day='
-                . $randomDate->day . '&month=' . $randomDate->month . '&country=' . $code->countrycode;
+                . $randomDate->day . '&month=' . $randomDate->month . '&country=' . $item->code;
             $specificDay = file_get_contents($url);
 
-            $result = (new Nameday())->specificDay($randomDate->day, $randomDate->month, $code->countrycode);
+            $result = (new Nameday())->specificDay($randomDate->day, $randomDate->month, $item->name);
+            $this->assertSame($result, $specificDay);
 
+            $result = (new Nameday())->specificDay($randomDate->day, $randomDate->month, $item->code);
             $this->assertSame($result, $specificDay);
         }
     }

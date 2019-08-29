@@ -22,12 +22,16 @@ class TomorrowCallTest extends TestCase
     public function tomorrowCallWithAllCountryCodes()
     {
 
-        $countries = file_get_contents(__DIR__ . '/data/countries.config');
+        $countries = file_get_contents(__DIR__ . '/data/supportedCountries.json');
         $availableCountries = json_decode((string)$countries);
 
-        foreach ($availableCountries as $code) {
-            $tomorrow = file_get_contents('https://api.abalin.net/get/tomorrow?country=' . $code->countrycode);
-            $result = (new Nameday())->tomorrow($code->countrycode);
+        foreach ($availableCountries as $item) {
+            $tomorrow = file_get_contents('https://api.abalin.net/get/tomorrow?country=' . $item->code);
+
+            $result = (new Nameday())->tomorrow($item->name);
+            $this->assertSame($result, $tomorrow);
+
+            $result = (new Nameday())->tomorrow($item->code);
             $this->assertSame($result, $tomorrow);
         }
     }

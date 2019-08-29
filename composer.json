@@ -38,7 +38,7 @@
       "@phpcs",
       "@phpunit"
     ],
-    "phpunit": "phpunit -v",
+    "phpunit": "vendor/bin/phpunit tests/ -v",
     "phpcs": "phpcs --colors -v --standard=PSR2 src tests",
     "phpstan": "phpstan analyse -v --level max src tests"
   }

@@ -1,7 +1,7 @@
 # Official International Name days API library
 ## Name day API library for [api.abalin.net](https://api.abalin.net)
 This library makes it easy to send requests towards [api.abalin.net](https://api.abalin.net) API.
-API provides name days for various countries. For list of supported countries reach out to [api documentation](https://api.abalin.net/documentation). 
+API provides name days for various countries. 
 
 ## Installation
 
@@ -31,6 +31,37 @@ You can then later update package using composer:
 composer update
  ```
 
+## List of supported countries
+
+When using country codes in the library you can use either **country names** or **country codes**.
+* Country names
+    * United States
+    * Czech Republic
+    * Slovakia
+    * Poland
+    * France
+    * Hungary
+    * Croatia
+    * Sweden
+    * Austria
+    * Italy
+    * Germany
+    * Spain
+* Country codes
+    * us
+    * cz
+    * sk
+    * pl
+    * fr
+    * hu
+    * hr
+    * se
+    * at
+    * it
+    * de
+    * es
+
+
 ## Usage
 
 ##### create an instance of the class
@@ -46,8 +77,13 @@ echo $nameday->yesterday(); # {"data":{"day":26,"month":8,"name_us":"Percival, P
 ##### Request name days for today / tomorrow / yesterday for specific country only
 ```php
 echo $nameday->today('sk'); # {"data":{"day":27,"month":8,"name_sk":"Silvia"}}
+echo $nameday->today('Slovakia'); # {"data":{"day":27,"month":8,"name_sk":"Silvia"}}
+
 echo $nameday->tomorrow('at'); # {"data":{"day":28,"month":8,"name_at":"Adelinde, Aline, Augustin"}}
+echo $nameday->tomorrow('Austria'); # {"data":{"day":28,"month":8,"name_at":"Adelinde, Aline, Augustin"}}
+
 echo $nameday->yesterday('de'); # {"data":{"day":26,"month":8,"name_de":"Margarita, Miriam, Patricia, Teresa"}}
+echo $nameday->yesterday('Germany'); # {"data":{"day":26,"month":8,"name_de":"Margarita, Miriam, Patricia, Teresa"}}
 ```
 ##### Request name days for specific date
 >specificDay(int $day, int $month, string $countryCode)
@@ -61,9 +97,16 @@ echo $nameday->specificDay(21,10); # {"data":{"day":21,"month":10,"name_us":"Cel
 simply add optional third string parameter ```$countryCode```, which must be one of the supported [country codes](https://api.abalin.net/documentation)
 ```php
 echo $nameday->specificDay(29,3,'es'); # {"data":{"day":29,"month":3,"name_es":"Jonas, Segundo"}}
+echo $nameday->specificDay(29,3,'Spain'); # {"data":{"day":29,"month":3,"name_es":"Jonas, Segundo"}}
+
 echo $nameday->specificDay(2,12,'de'); # {"data":{"day":2,"month":12,"name_de":"Bibiana, Jan, Lucius"}}
+echo $nameday->specificDay(2,12,'Germany'); # {"data":{"day":2,"month":12,"name_de":"Bibiana, Jan, Lucius"}}
+
 echo $nameday->specificDay(12,1,'pl'); # {"data":{"day":22,"month":1,"name_pl":"Anastazy, Dobromysł, Dorian, Marta, Wincenty"}}
+echo $nameday->specificDay(12,1,'Poland'); # {"data":{"day":22,"month":1,"name_pl":"Anastazy, Dobromysł, Dorian, Marta, Wincenty"}}
+
 echo $nameday->specificDay(2,2,'hr'); # {"data":{"day":2,"month":2,"name_hr":"Marijan"}}
+echo $nameday->specificDay(2,2,'Croatia'); # {"data":{"day":2,"month":2,"name_hr":"Marijan"}}
 ```
 ##### Request name day in country calendar
 Will return all days in given calendar which contains the name.
@@ -73,6 +116,7 @@ Both parameters are required. Parameter ```$countryCode``` must be one of the su
 
 ```php
 echo $nameday->searchByName('Jan','cz'); # {"calendar":"cz","results":[{"day":24,"month":5,"name":"Jana"},{"day":24,"month":6,"name":"Jan"} ... }}
+echo $nameday->searchByName('Jan','Czech Republic'); # {"calendar":"cz","results":[{"day":24,"month":5,"name":"Jana"},{"day":24,"month":6,"name":"Jan"} ... }}
 ```
 
 ### Specification of time zone

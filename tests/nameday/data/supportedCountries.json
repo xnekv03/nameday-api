@@ -1,0 +1,50 @@
+[
+  {
+    "name": "United States",
+    "code": "us"
+  },
+  {
+    "name": "Czech Republic",
+    "code": "cz"
+  },
+  {
+    "name": "slovakia",
+    "code": "sk"
+  },
+  {
+    "name": "Poland",
+    "code": "pl"
+  },
+  {
+    "name": "France",
+    "code": "fr"
+  },
+  {
+    "name": "Hungary",
+    "code": "hu"
+  },
+  {
+    "name": "Croatia",
+    "code": "hr"
+  },
+  {
+    "name": "Sweden",
+    "code": "se"
+  },
+  {
+    "name": "Austria",
+    "code": "at"
+  },
+  {
+    "name": "Italy",
+    "code": "it"
+  },
+  {
+    "name": "Germany",
+    "code": "de"
+  },
+  {
+    "name": "Spain",
+    "code": "es"
+  }
+]

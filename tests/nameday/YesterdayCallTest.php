@@ -21,12 +21,17 @@ class YesterdayCallTest extends TestCase
      */
     public function yesterdayCallWithAllCountryCodes()
     {
-        $availableCountries = json_decode((string)file_get_contents(__DIR__ . '/data/countries.config'));
+        $countries = file_get_contents(__DIR__ . '/data/supportedCountries.json');
+        $availableCountries = json_decode((string)$countries);
 
-        foreach ($availableCountries as $code) {
-            $yesterday = file_get_contents('https://api.abalin.net/get/yesterday?country=' . $code->countrycode);
-            $result = (new Nameday())->yesterday($code->countrycode);
-            $this->assertSame($result, $yesterday);
+        foreach ($availableCountries as $item) {
+            $tomorrow = file_get_contents('https://api.abalin.net/get/yesterday?country=' . $item->code);
+
+            $result = (new Nameday())->yesterday($item->name);
+            $this->assertSame($result, $tomorrow);
+
+            $result = (new Nameday())->yesterday($item->code);
+            $this->assertSame($result, $tomorrow);
         }
     }
 

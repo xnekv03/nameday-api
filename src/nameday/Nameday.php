@@ -125,6 +125,7 @@ class Nameday
                 return $item->code;
             }
         }
+
         throw new InvalidArgumentException('Invalid parameter Country');
     }
 

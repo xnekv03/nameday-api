@@ -22,12 +22,16 @@ class TodayCallTest extends TestCase
     public function todayCallWithAllCountryCodes()
     {
 
-        $countries = file_get_contents(__DIR__ . '/data/countries.config');
+        $countries = file_get_contents(__DIR__ . '/data/supportedCountries.json');
         $availableCountries = json_decode((string)$countries);
 
-        foreach ($availableCountries as $code) {
-            $today = file_get_contents('https://api.abalin.net/get/today?country=' . $code->countrycode);
-            $result = (new Nameday())->today($code->countrycode);
+        foreach ($availableCountries as $item) {
+            $today = file_get_contents('https://api.abalin.net/get/today?country=' . $item->code);
+
+            $result = (new Nameday())->today($item->name);
+            $this->assertSame($result, $today);
+
+            $result = (new Nameday())->today($item->code);
             $this->assertSame($result, $today);
         }
     }
