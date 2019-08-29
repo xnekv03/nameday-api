@@ -10,6 +10,7 @@ use InvalidArgumentException;
 class Nameday
 {
     protected $carbonToday;
+    protected $countryList;
 
     /**
      * @param string|null $timeZone
@@ -22,67 +23,69 @@ class Nameday
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
+
+        $this->countryList = json_decode((string)file_get_contents('src/nameday/data/countryList.json'));
     }
 
     /**
-     * @param string|null $countryCode
+     * @param string|null $country
      * @return string
      * @throws Exception
      */
-    public function today(?string $countryCode = null): string
+    public function today(?string $country = null): string
     {
-        if ($countryCode === null) {
+        if ($country === null) {
             return $this->specificDay($this->carbonToday->day, $this->carbonToday->month);
         }
 
         return $this->specificDay(
             $this->carbonToday->day,
             $this->carbonToday->month,
-            $this->countryCodeCheck($countryCode)
+            $this->countryCodeCheck($country)
         );
     }
 
     /**
-     * @param string|null $countryCode
+     * @param string|null $country
      * @return string
      * @throws Exception
      */
-    public function tomorrow(?string $countryCode = null): string
+    public function tomorrow(?string $country = null): string
     {
         $tomorrow = $this->carbonToday->clone()->addDay();
-        if ($countryCode === null) {
+        if ($country === null) {
             return $this->specificDay($tomorrow->day, $tomorrow->month);
         }
 
-        return $this->specificDay($tomorrow->day, $tomorrow->month, $this->countryCodeCheck($countryCode));
+        return $this->specificDay($tomorrow->day, $tomorrow->month, $this->countryCodeCheck($country));
     }
 
     /**
-     * @param string|null $countryCode
+     * @param string|null $country
      * @return string
      */
-    public function yesterday(?string $countryCode = null): string
+    public function yesterday(?string $country = null): string
     {
         $yesterday = $this->carbonToday->clone()->subDay();
-        if ($countryCode === null) {
+        if ($country === null) {
             return $this->specificDay($yesterday->day, $yesterday->month);
         }
 
-        return $this->specificDay($yesterday->day, $yesterday->month, $this->countryCodeCheck($countryCode));
+        return $this->specificDay($yesterday->day, $yesterday->month, $this->countryCodeCheck($country));
     }
 
     /**
      * @param string $name
-     * @param string $countryCode
+     * @param string $country
      * @return string
      */
-    public function searchByName(string $name, string $countryCode): string
+    public function searchByName(string $name, string $country): string
     {
         if (strlen($name) < 3) {
             throw new InvalidArgumentException('Invalid parameter name');
         }
 
-        $url = 'getdate?name=' . $name . '&calendar=' . $this->countryCodeCheck($countryCode);
+        $url = 'getdate?name=' . $name . '&calendar=' . $this->countryCodeCheck($country);
 
         return $this->callApi($url);
     }
@@ -90,11 +93,11 @@ class Nameday
     /**
      * @param int $day
      * @param int $month
-     * @param string|null $countryCode
+     * @param string|null $country
      * @return string
      * @throws InvalidArgumentException
      */
-    public function specificDay(int $day, int $month, ?string $countryCode = null): string
+    public function specificDay(int $day, int $month, ?string $country = null): string
     {
         // leap year
         if (!checkdate($month, $day, 2016)) {
@@ -103,23 +106,26 @@ class Nameday
 
         $url = 'namedays?day=' . $day . '&month=' . $month;
 
-        if ($countryCode !== null) {
-            $url .= '&country=' . $this->countryCodeCheck($countryCode);
+        if ($country !== null) {
+            $url .= '&country=' . $this->countryCodeCheck($country);
         }
         return $this->callApi($url);
     }
 
     /**
-     * @param string $countryCode
+     * @param string $country
      * @return string
      * @throws InvalidArgumentException
      */
-    private function countryCodeCheck(string $countryCode): string
+    private function countryCodeCheck(string $country): string
     {
-        if (strlen(trim($countryCode)) !== 2) {
-            throw new InvalidArgumentException('Invalid parameter Country');
+        $countryCode = strtolower(trim($country));
+        foreach ($this->countryList as $item) {
+            if ($countryCode === $item->name || $countryCode === $item->code) {
+                return $item->code;
+            }
         }
-        return trim($countryCode);
+        throw new InvalidArgumentException('Invalid parameter Country');
     }
 
     /**

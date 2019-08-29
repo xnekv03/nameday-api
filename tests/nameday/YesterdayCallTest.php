@@ -21,9 +21,7 @@ class YesterdayCallTest extends TestCase
      */
     public function yesterdayCallWithAllCountryCodes()
     {
-
-        $countries = file_get_contents(__DIR__ . '/data/countries.config');
-        $availableCountries = json_decode((string)$countries);
+        $availableCountries = json_decode((string)file_get_contents(__DIR__ . '/data/countries.config'));
 
         foreach ($availableCountries as $code) {
             $yesterday = file_get_contents('https://api.abalin.net/get/yesterday?country=' . $code->countrycode);
