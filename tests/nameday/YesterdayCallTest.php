@@ -9,7 +9,6 @@ class YesterdayCallTest extends TestCase
 {
 
     /** @test
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function basicYesterdayCall()
     {
@@ -19,7 +18,6 @@ class YesterdayCallTest extends TestCase
     }
 
     /** @test
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function yesterdayCallWithAllCountryCodes()
     {
@@ -36,7 +34,6 @@ class YesterdayCallTest extends TestCase
 
     /**
      * @dataProvider data
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testYesterdayCallWithParameters($parameter)
     {

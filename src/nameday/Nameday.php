@@ -5,7 +5,6 @@ namespace Nameday;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 
 class Nameday
@@ -76,8 +75,6 @@ class Nameday
      * @param string $name
      * @param string $countryCode
      * @return string
-     * @throws InvalidArgumentException
-     * @throws GuzzleException
      */
     public function searchByName(string $name, string $countryCode): string
     {
@@ -128,7 +125,6 @@ class Nameday
     /**
      * @param string $urlParameter
      * @return string
-     * @throws GuzzleException
      */
     private function callApi(string $urlParameter): string
     {

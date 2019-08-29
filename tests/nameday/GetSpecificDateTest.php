@@ -34,7 +34,6 @@ class GetSpecificDateTest extends TestCase
 
     /**
      * @dataProvider data
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
 
     public function testSpecificDateCallWithParameters($day, $month, $countryCode, string $expectedException)
@@ -47,7 +46,7 @@ class GetSpecificDateTest extends TestCase
     public function data()
     {
         return [
-            [4, 5, 'some onsense', 'Invalid parameter Country'],
+            [4, 5, 'some nonsense', 'Invalid parameter Country'],
             [4, 5, 's', 'Invalid parameter Country'],
             [4, 5, 'som', 'Invalid parameter Country'],
             [4, 5, '', 'Invalid parameter Country'],
