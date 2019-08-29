@@ -36,7 +36,6 @@
     "build": [
       "@composer install --no-progress --no-interaction --no-suggest --no-scripts",
       "@phpcs",
-      "@phpstan",
       "@phpunit"
     ],
     "phpunit": "phpunit -v",
