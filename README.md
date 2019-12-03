@@ -32,6 +32,7 @@ composer update
  ```
 
 ## List of supported countries
+Constantly adding new Country codes, please check [api.abalin.net](https://api.abalin.net) for updated list.
 
 When using country codes in the library you can use either **country names** or **country codes**.
 * Country names
@@ -67,6 +68,7 @@ When using country codes in the library you can use either **country names** or 
 ##### create an instance of the class
 ```php
 $nameday = new Nameday();
+$nameday = new Nameday('America/Vancouver'); # time zone specification, other then system default (see below)
 ```
 ##### Request name days for today / tomorrow / yesterday
 ```php

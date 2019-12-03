@@ -3,17 +3,16 @@
 namespace Nameday;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 
-class TomorrowCallTest extends TestCase
+class TomorrowCallTest extends BaseTest
 {
 
     /** @test
      */
     public function basicTomorrowCall()
     {
-        $tomorrow = file_get_contents('https://api.abalin.net/get/tomorrow');
-        $result = (new Nameday())->tomorrow();
+        $tomorrow = file_get_contents($this->baseUrl . 'tomorrow');
+        $result = $this->nameday->tomorrow();
         $this->assertEquals($result, $tomorrow);
     }
 
@@ -22,16 +21,13 @@ class TomorrowCallTest extends TestCase
     public function tomorrowCallWithAllCountryCodes()
     {
 
-        $countries = file_get_contents(__DIR__ . '/data/supportedCountries.json');
-        $availableCountries = json_decode((string)$countries);
+        foreach ($this->availableCountries as $item) {
+            $tomorrow = file_get_contents($this->baseUrl . 'tomorrow?country=' . $item->code);
 
-        foreach ($availableCountries as $item) {
-            $tomorrow = file_get_contents('https://api.abalin.net/get/tomorrow?country=' . $item->code);
-
-            $result = (new Nameday())->tomorrow($item->name);
+            $result = $this->nameday->tomorrow($item->name);
             $this->assertSame($result, $tomorrow);
 
-            $result = (new Nameday())->tomorrow($item->code);
+            $result = $this->nameday->tomorrow($item->code);
             $this->assertSame($result, $tomorrow);
         }
     }
@@ -41,10 +37,9 @@ class TomorrowCallTest extends TestCase
      */
     public function testTomorrowCallWithParameters($parameter)
     {
-        $result = new Nameday();
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid parameter Country');
-        $result->tomorrow($parameter);
+        $this->nameday->tomorrow($parameter);
     }
 
     public function data()

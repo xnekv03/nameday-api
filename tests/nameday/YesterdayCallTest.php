@@ -3,17 +3,16 @@
 namespace Nameday;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 
-class YesterdayCallTest extends TestCase
+class YesterdayCallTest extends BaseTest
 {
 
     /** @test
      */
     public function basicYesterdayCall()
     {
-        $yesterday = file_get_contents('https://api.abalin.net/get/yesterday');
-        $result = (new Nameday())->yesterday();
+        $yesterday = file_get_contents($this->baseUrl . 'yesterday');
+        $result = $this->nameday->yesterday();
         $this->assertEquals($result, $yesterday);
     }
 
@@ -21,16 +20,14 @@ class YesterdayCallTest extends TestCase
      */
     public function yesterdayCallWithAllCountryCodes()
     {
-        $countries = file_get_contents(__DIR__ . '/data/supportedCountries.json');
-        $availableCountries = json_decode((string)$countries);
 
-        foreach ($availableCountries as $item) {
-            $tomorrow = file_get_contents('https://api.abalin.net/get/yesterday?country=' . $item->code);
+        foreach ($this->availableCountries as $item) {
+            $tomorrow = file_get_contents($this->baseUrl . 'yesterday?country=' . $item->code);
 
-            $result = (new Nameday())->yesterday($item->name);
+            $result = $this->nameday->yesterday($item->name);
             $this->assertSame($result, $tomorrow);
 
-            $result = (new Nameday())->yesterday($item->code);
+            $result = $this->nameday->yesterday($item->code);
             $this->assertSame($result, $tomorrow);
         }
     }
@@ -40,10 +37,9 @@ class YesterdayCallTest extends TestCase
      */
     public function testYesterdayCallWithParameters($parameter)
     {
-        $result = new Nameday();
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid parameter Country');
-        $result->yesterday($parameter);
+        $this->nameday->yesterday($parameter);
     }
 
     public function data()

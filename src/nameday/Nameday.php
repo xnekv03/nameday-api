@@ -11,6 +11,7 @@ class Nameday
 {
     protected $carbonToday;
     protected $countryList;
+    protected $baseUrl = 'https://api.abalin.net/';
 
     /**
      * @param string|null $timeZone
@@ -137,7 +138,7 @@ class Nameday
     {
         $client = new Client();
 
-        $res = $client->request('GET', 'https://api.abalin.net/get/' . $urlParameter);
+        $res = $client->request('GET', $this->baseUrl . $urlParameter);
         return $res->getBody()->getContents();
     }
 }
