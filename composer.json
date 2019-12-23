@@ -24,12 +24,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Nameday\\": "src/Nameday/"
+      "Nameday\\": "src/nameday/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Nameday\\": "tests/Nameday/"
+      "Nameday\\": "tests/nameday/"
     }
   },
   "scripts": {
