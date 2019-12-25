@@ -7,7 +7,10 @@ use InvalidArgumentException;
 class TodayCallTest extends BaseTest
 {
 
-    /** @test
+    /**
+     *
+     *
+     * @test
      */
     public function basicTodayCall()
     {
@@ -15,10 +18,12 @@ class TodayCallTest extends BaseTest
         $today = file_get_contents($this->baseUrl . 'today');
         $result = $this->nameday->today();
         $this->assertEquals($result, $today);
-
     }
 
-    /** @test
+    /**
+     *
+     *
+     * @test
      */
     public function todayCallWithAllCountryCodes()
     {

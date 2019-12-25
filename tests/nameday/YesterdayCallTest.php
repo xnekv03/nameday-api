@@ -7,7 +7,10 @@ use InvalidArgumentException;
 class YesterdayCallTest extends BaseTest
 {
 
-    /** @test
+    /**
+     *
+     *
+     * @test
      */
     public function basicYesterdayCall()
     {
@@ -16,7 +19,10 @@ class YesterdayCallTest extends BaseTest
         $this->assertEquals($result, $yesterday);
     }
 
-    /** @test
+    /**
+     *
+     *
+     * @test
      */
     public function yesterdayCallWithAllCountryCodes()
     {

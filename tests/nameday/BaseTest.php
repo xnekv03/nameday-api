@@ -3,7 +3,6 @@
 
 namespace Nameday;
 
-
 use PHPUnit\Framework\TestCase;
 
 abstract class BaseTest extends TestCase
@@ -20,5 +19,4 @@ abstract class BaseTest extends TestCase
         $this->availableCountries = json_decode((string)$countries);
         $this->nameday = new Nameday();
     }
-
 }
