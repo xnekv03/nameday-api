@@ -120,13 +120,12 @@ class Nameday
      */
     private function countryCodeCheck(string $country): string
     {
-        $countryCode = strtolower(trim($country));
+        $country = trim($country);
         foreach ($this->countryList as $item) {
-            if ($countryCode === $item->name || $countryCode === $item->code) {
+            if (!(strcasecmp($country, $item->code) && strcasecmp($country, $item->name))) {
                 return $item->code;
             }
         }
-
         throw new InvalidArgumentException('Invalid parameter Country');
     }
 
