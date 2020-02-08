@@ -46,5 +46,29 @@
   {
     "name": "Spain",
     "code": "es"
+  },
+  {
+    "name": "Bulgaria",
+    "code": "bg"
+  },
+  {
+    "name": "Lithuania",
+    "code": "lt"
+  },
+  {
+    "name": "Estonia",
+    "code": "ee"
+  },
+  {
+    "name": "Latvia",
+    "code": "lv"
+  },
+  {
+    "name": "Greece",
+    "code": "gr"
+  },
+  {
+    "name": "Russian Federation",
+    "code": "ru"
   }
 ]
