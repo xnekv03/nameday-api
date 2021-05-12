@@ -1,4 +1,4 @@
-name: PHP Linting
+name: PHP Lintingg
 on: pull_request
 jobs:
   phplint:
