@@ -38,5 +38,5 @@ jobs:
       - name: Run phpstan
         run: composer run-script phpunit
 
-      - name: Run phpunit
+      - name: Run phpstan
         run: composer run-script phpstan
