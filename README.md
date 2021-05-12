@@ -1,7 +1,7 @@
 # Official International Name days API library
-## Name day API library for [api.abalin.net](https://api.abalin.net)
-This library makes it easy to send requests towards [api.abalin.net](https://api.abalin.net) API.
-API provides name days for various countries. 
+## Name day API library for [nameday.abalin.net](https://nameday.abalin.net)
+This library makes it easy to send requests towards [nameday.abalin.net](https://nameday.abalin.net) API.
+API provides name days for various countries.
 
 ## Installation
 
@@ -32,35 +32,35 @@ composer update
  ```
 
 ## List of supported countries
-Constantly adding new Country codes, please check [api.abalin.net](https://api.abalin.net) for updated list.
+Constantly adding new Country codes, please check [nameday.abalin.net](https://nameday.abalin.net) for updated list.
 
 When using country codes in the library you can use either **country names** or **country codes**.
 * Country names
-    * United States
-    * Czech Republic
-    * Slovakia
-    * Poland
-    * France
-    * Hungary
-    * Croatia
-    * Sweden
-    * Austria
-    * Italy
-    * Germany
-    * Spain
+  * United States
+  * Czech Republic
+  * Slovakia
+  * Poland
+  * France
+  * Hungary
+  * Croatia
+  * Sweden
+  * Austria
+  * Italy
+  * Germany
+  * Spain
 * Country codes
-    * us
-    * cz
-    * sk
-    * pl
-    * fr
-    * hu
-    * hr
-    * se
-    * at
-    * it
-    * de
-    * es
+  * us
+  * cz
+  * sk
+  * pl
+  * fr
+  * hu
+  * hr
+  * se
+  * at
+  * it
+  * de
+  * es
 
 
 ## Usage
@@ -96,7 +96,7 @@ echo $nameday->specificDay(21,10); # {"data":{"day":21,"month":10,"name_us":"Cel
 ```
 
 ##### Request name days for specific date and for specific country only
-simply add optional third string parameter ```$countryCode```, which must be one of the supported [country codes](https://api.abalin.net/documentation)
+simply add optional third string parameter ```$countryCode```, which must be one of the supported [country codes](https://nameday.abalin.net/documentation)
 ```php
 echo $nameday->specificDay(29,3,'es'); # {"data":{"day":29,"month":3,"name_es":"Jonas, Segundo"}}
 echo $nameday->specificDay(29,3,'Spain'); # {"data":{"day":29,"month":3,"name_es":"Jonas, Segundo"}}
@@ -114,7 +114,7 @@ echo $nameday->specificDay(2,2,'Croatia'); # {"data":{"day":2,"month":2,"name_hr
 Will return all days in given calendar which contains the name.
 >searchByName(string $day, string $countryCode)
 
-Both parameters are required. Parameter ```$countryCode``` must be one of the supported [country codes](https://api.abalin.net/documentation)
+Both parameters are required. Parameter ```$countryCode``` must be one of the supported [country codes](https://nameday.abalin.net/docs/)
 
 ```php
 echo $nameday->searchByName('Jan','cz'); # {"calendar":"cz","results":[{"day":24,"month":5,"name":"Jana"},{"day":24,"month":6,"name":"Jan"} ... }}
@@ -138,7 +138,7 @@ echo $nameday->tomorrow(); # will return today name days according to given UTC 
 ```
 
 ### Certificate
-Make sure you have proper certificates stored on your local machine as Name day API uses HTTPS only. 
+Make sure you have proper certificates stored on your local machine as Name day API uses HTTPS only.
 
 If you run into problems with server certificate try downloading the [The Mozilla CA certificate store](https://curl.haxx.se/docs/caextract.html), save it on your system and configure ```php.ini```
 ```ini

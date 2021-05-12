@@ -1,53 +1,90 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Nameday;
 
-use Carbon\Carbon;
-use InvalidArgumentException;
+use GuzzleHttp\Exception\InvalidArgumentException;
+
+use function PHPUnit\Framework\assertArrayHasKey;
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
 
 class GetSpecificDateTest extends BaseTest
 {
 
-    public function testSimpleCall()
+    /**
+     * @dataProvider invalidDateDataProvider
+     * @test
+     */
+    public function invalidDate(int $day, int $month)
     {
-        foreach ($this->availableCountries as $item) {
-            $randomDate = Carbon::today()->addDays(random_int(1, 99));
-            $url = $this->baseUrl . 'namedays?day='
-                . $randomDate->day . '&month=' . $randomDate->month . '&country=' . $item->code;
-            $specificDay = file_get_contents($url);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->namedayInstance->specificDay($day, $month, 'hu');
+    }
 
-            $result = $this->nameday->specificDay($randomDate->day, $randomDate->month, $item->name);
-            $this->assertSame($result, $specificDay);
+    public function invalidDateDataProvider()
+    {
+        return [
+            [55, 10],
+            [155, 10],
+            [1, 100],
+            [1, 13],
+            [31, 6],
+            [32, 5],
+        ];
+    }
 
-            $result = $this->nameday->specificDay($randomDate->day, $randomDate->month, $item->code);
-            $this->assertSame($result, $specificDay);
-        }
+
+    /**
+     * @dataProvider invalidCountryCodeProvider
+     * @test
+     */
+    public function invalidCountryCode($countryCode)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->namedayInstance->specificDay(random_int(1, 10), random_int(1, 12), $countryCode);
+    }
+
+    public function invalidCountryCodeProvider()
+    {
+        return [
+            ['abcde'],
+            [''],
+            ['s'],
+            ['dsjbabsabdidsabidsabu'],
+        ];
     }
 
     /**
-     * @dataProvider data
+     * @dataProvider simpleCallDataProvider
+     * @test
      */
-
-    public function testSpecificDateCallWithParameters($day, $month, $countryCode, string $expectedException)
+    public function simpleCall(int $day, int $month, string $country, string $name)
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage($expectedException);
-        $this->nameday->specificDay($day, $month, $countryCode);
+        $response = $this->namedayInstance->specificDay($day, $month, $country);
+
+        assertArrayHasKey('data', $response);
+        assertArrayHasKey('day', $response[ 'data' ]);
+        assertArrayHasKey('month', $response[ 'data' ]);
+        assertArrayHasKey('name_' . $country, $response[ 'data' ]);
+        assertSame($name, $response[ 'data' ][ 'name_' . $country ]);
+        assertSame($day, $response[ 'data' ][ 'day' ]);
+        assertSame($month, $response[ 'data' ][ 'month' ]);
+        assertCount(
+            3,
+            $response[ 'data' ],
+            "srray doesn't contains 3 elements"
+        );
     }
 
-    public function data()
+    public function simpleCallDataProvider()
     {
         return [
-            [4, 5, 'some nonsense', 'Invalid parameter Country'],
-            [4, 5, 's', 'Invalid parameter Country'],
-            [4, 5, 'som', 'Invalid parameter Country'],
-            [4, 5, '', 'Invalid parameter Country'],
-            [4, 5, md5('abc'), 'Invalid parameter Country'],
-            [4, 55, md5('abc'), 'Invalid date'],
-            [4, 55, 'fr', 'Invalid date'],
-            [44, 5, 'sk', 'Invalid date'],
-            [30, 2, 'us', 'Invalid date'],
-            [31, 9, 'de', 'Invalid date'],
+        [1, 5, 'sk', 'Sviatok práce'],
+        [23, 4, 'sk', 'Vojtech'],
+        [23, 4, 'cz', 'Vojtěch'],
+        [10, 5, 'us', 'Cormac, Cormick, Gordon, Job, Joby, Jobina, Max, Maximilian, Maximus, Maxine, Maxwell'],
         ];
     }
 }

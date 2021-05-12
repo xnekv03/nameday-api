@@ -1,116 +1,72 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Nameday;
 
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
-use InvalidArgumentException;
+use GuzzleHttp\Exception\InvalidArgumentException;
 
 class Nameday
 {
     protected $carbonToday;
     protected $countryList;
-    protected $baseUrl = 'https://api.abalin.net/';
+    protected $baseUrl = 'https://nameday.abalin.net/';
 
     /**
      * @param string|null $timeZone
      * @throws Exception
      */
-    public function __construct(?string $timeZone = null)
+    public function __construct(string $timeZone = null)
     {
         try {
-            $this->carbonToday = Carbon::now($timeZone);
+            $this->carbonToday = is_null($timeZone) ? Carbon::now() : Carbon::now($timeZone);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
-        $this->countryList = json_decode((string)file_get_contents(__DIR__ . '/data/countryList.json'));
+        $this->countryList = json_decode(file_get_contents('src/nameday/data/countryList.json'));
     }
 
-    /**
-     * @param string|null $country
-     * @return string
-     * @throws Exception
-     */
-    public function today(?string $country = null): string
-    {
-        if ($country === null) {
-            return $this->specificDay($this->carbonToday->day, $this->carbonToday->month);
-        }
-
-        return $this->specificDay(
-            $this->carbonToday->day,
-            $this->carbonToday->month,
-            $this->countryCodeCheck($country)
-        );
-    }
-
-    /**
-     * @param string|null $country
-     * @return string
-     * @throws Exception
-     */
-    public function tomorrow(?string $country = null): string
-    {
-        $tomorrow = $this->carbonToday->clone()->addDay();
-        if ($country === null) {
-            return $this->specificDay($tomorrow->day, $tomorrow->month);
-        }
-
-        return $this->specificDay($tomorrow->day, $tomorrow->month, $this->countryCodeCheck($country));
-    }
-
-    /**
-     * @param string|null $country
-     * @return string
-     */
-    public function yesterday(?string $country = null): string
-    {
-        $yesterday = $this->carbonToday->clone()->subDay();
-        if ($country === null) {
-            return $this->specificDay($yesterday->day, $yesterday->month);
-        }
-
-        return $this->specificDay($yesterday->day, $yesterday->month, $this->countryCodeCheck($country));
-    }
-
-    /**
-     * @param string $name
-     * @param string $country
-     * @return string
-     */
-    public function searchByName(string $name, string $country): string
-    {
-        if (strlen($name) < 3) {
-            throw new InvalidArgumentException('Invalid parameter name');
-        }
-
-        $url = 'getdate?name=' . $name . '&calendar=' . $this->countryCodeCheck($country);
-
-        return $this->callApi($url);
-    }
 
     /**
      * @param int $day
      * @param int $month
-     * @param string|null $country
+     * @param string $country
      * @return string
      * @throws InvalidArgumentException
      */
-    public function specificDay(int $day, int $month, ?string $country = null): string
+    public function specificDay(int $day, int $month, string $country): array
     {
-        // leap year
         if (!checkdate($month, $day, 2016)) {
             throw new InvalidArgumentException('Invalid date');
         }
 
-        $url = 'namedays?day=' . $day . '&month=' . $month;
+        $date = Carbon::createFromDate(2016, $month, $day, $this->carbonToday->timezoneName);
 
-        if ($country !== null) {
-            $url .= '&country=' . $this->countryCodeCheck($country);
+        $countryCode = $this->countryCodeCheck($country);
+        if (is_null($countryCode)) {
+            throw new InvalidArgumentException('Invalid country code');
         }
-        return $this->callApi($url);
+
+        $response = $this->callApi(
+            'namedays',
+            [
+                'day'     => $date->day,
+                'month'   => $date->month,
+                'country' => $countryCode
+            ]
+        );
+
+        return [
+            'data' => [
+                'day'                  => $date->day,
+                'month'                => $date->month,
+                'name_' . $countryCode => $response[ 'data' ][ 'namedays' ][ $countryCode ],
+            ],
+        ];
     }
 
     /**
@@ -118,26 +74,49 @@ class Nameday
      * @return string
      * @throws InvalidArgumentException
      */
-    private function countryCodeCheck(string $country): string
+    private function countryCodeCheck(string $country): ?string
     {
         $country = trim($country);
+        if (strlen($country) < 2) {
+            return null;
+        }
+
         foreach ($this->countryList as $item) {
-            if (!(strcasecmp($country, $item->code) && strcasecmp($country, $item->name))) {
-                return $item->code;
+            if (
+                !(
+                strcasecmp($country, $item->countrycode)
+                && strcasecmp($country, $item->name)
+                && strcasecmp($country, $item->alpha3)
+                )
+            ) {
+                return $item->countrycode;
             }
         }
-        throw new InvalidArgumentException('Invalid parameter Country');
+        return null;
     }
 
     /**
      * @param string $urlParameter
      * @return string
      */
-    private function callApi(string $urlParameter): string
+    private function callApi(string $urlParameter, array $formParams = null): array
     {
-        $client = new Client();
+        try {
+            $response = (new Client())->request(
+                'POST',
+                $this->baseUrl . $urlParameter,
+                [
+                    'form_params' => is_null($formParams) ? [] : $formParams
+                ]
+            );
+        } catch (Exception $e) {
+            throw new InvalidArgumentException($e->getMessage());
+        }
 
-        $res = $client->request('GET', $this->baseUrl . $urlParameter);
-        return $res->getBody()->getContents();
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception('Unsuccessfull call');
+        }
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 }
