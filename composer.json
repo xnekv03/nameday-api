@@ -47,7 +47,8 @@
       "@phpstan"
     ],
     "phpunit": "vendor/bin/phpunit tests/ -v",
-    "phpcs": "vendor/bin/phpcs --colors -v --standard=PSR2 src tests",
-    "phpstan": "vendor/bin/phpstan analyse -v src tests"
+    "phpcbf": "vendor/bin/phpcbf --colors -v --standard=PSR12 src/ tests/",
+    "phpcs": "vendor/bin/phpcs --colors -v --standard=PSR12 src/ tests/",
+    "phpstan": "vendor/bin/phpstan analyse -v --level=5 src/ tests/"
   }
 }

@@ -35,7 +35,7 @@ class Nameday
      * @param int $day
      * @param int $month
      * @param string $country
-     * @return string
+     * @return array
      * @throws InvalidArgumentException
      */
     public function specificDay(int $day, int $month, string $country): array
@@ -97,7 +97,7 @@ class Nameday
 
     /**
      * @param string $urlParameter
-     * @return string
+     * @return array
      */
     private function callApi(string $urlParameter, array $formParams = null): array
     {
