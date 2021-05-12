@@ -4,7 +4,7 @@ This library makes it easy to send requests towards [nameday.abalin.net](https:/
 API provides name days for various countries.
 
 
-https://github.com/xnekv03/nameday-api/actions/workflows/phpci.yml/badge.svg
+![PHP Linnt](https://github.com/xnekv03/nameday-api/actions/workflows/phpci.yml/badge.svg)
 
 ## Installation
 
