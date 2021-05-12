@@ -1,4 +1,4 @@
-name: Phpunit
+name: Code quality
 
 on:
   push:
