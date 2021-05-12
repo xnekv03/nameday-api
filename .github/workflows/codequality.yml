@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Phpunit
 
 on:
   push:
@@ -28,3 +28,9 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
+
+      - name: Run code sniffer
+        run: composer run-script phpcbf && composer run-script phpcs
+
+      - name: Run phpstan
+        run: composer run-script phpstan

@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Phpunit
 
 on:
   push:
@@ -28,3 +28,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
+
+      - name: Run phpunit
+        run: composer run-script phpunit

@@ -5,6 +5,8 @@ API provides name days for various countries.
 
 
 ![PHP Linnt](https://github.com/xnekv03/nameday-api/actions/workflows/phpci.yml/badge.svg)
+![PHPUnit](https://github.com/xnekv03/nameday-api/actions/workflows/phpunit.yml/badge.svg)
+![Code Quality](https://github.com/xnekv03/nameday-api/actions/workflows/codequality.yml/badge.svg)
 
 ## Installation
 
