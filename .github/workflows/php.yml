@@ -29,8 +29,8 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-     - name: Run test suite
-       run: composer run-script phpunit &&
-            composer run-script phpcbf &&
-            composer run-script phpcs &&
-            composer run-script phpstan
+      - name: Run test suite
+        run: composer run-script phpunit &&
+          composer run-script phpcbf &&
+          composer run-script phpcs &&
+          composer run-script phpstan
