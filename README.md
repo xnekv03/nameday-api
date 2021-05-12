@@ -62,7 +62,6 @@ When using country codes in the library you can use either **country names** or 
   * de
   * es
 
-
 ## Usage
 
 ##### create an instance of the class
