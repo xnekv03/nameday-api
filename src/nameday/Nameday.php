@@ -31,41 +31,39 @@ class Nameday
     }
 
 
-    /**
-     * @param int $day
-     * @param int $month
-     * @param string $country
-     * @return array
-     * @throws InvalidArgumentException
-     */
-    public function specificDay(int $day, int $month, string $country): array
+    public function searchByName(string $name, string $country): array
     {
-        if (!checkdate($month, $day, 2016)) {
-            throw new InvalidArgumentException('Invalid date');
-        }
+        $name = trim($name);
 
-        $date = Carbon::createFromDate(2016, $month, $day, $this->carbonToday->timezoneName);
+        if (strlen($name) < 3) {
+            throw new InvalidArgumentException('The name must be at least 3 characters');
+        }
 
         $countryCode = $this->countryCodeCheck($country);
         if (is_null($countryCode)) {
             throw new InvalidArgumentException('Invalid country code');
         }
 
+
         $response = $this->callApi(
-            'namedays',
+            'getdate',
             [
-                'day'     => $date->day,
-                'month'   => $date->month,
+                'name'    => $name,
                 'country' => $countryCode
             ]
         );
 
+        foreach ($response[ 'data' ][ 'namedays' ] as $nd) {
+            $results[] = [
+                'day'   => $nd[ 'day' ],
+                'month' => $nd[ 'month' ],
+                'name'  => $nd[ 'name' ],
+            ];
+        }
+
         return [
-            'data' => [
-                'day'                  => $date->day,
-                'month'                => $date->month,
-                'name_' . $countryCode => $response[ 'data' ][ 'namedays' ][ $countryCode ],
-            ],
+            'calendar' => $countryCode,
+            'results'  => $results ?? [],
         ];
     }
 
@@ -118,5 +116,43 @@ class Nameday
         }
 
         return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @param int $day
+     * @param int $month
+     * @param string $country
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    public function specificDay(int $day, int $month, string $country): array
+    {
+        if (!checkdate($month, $day, 2016)) {
+            throw new InvalidArgumentException('Invalid date');
+        }
+
+        $date = Carbon::createFromDate(2016, $month, $day, $this->carbonToday->timezoneName);
+
+        $countryCode = $this->countryCodeCheck($country);
+        if (is_null($countryCode)) {
+            throw new InvalidArgumentException('Invalid country code');
+        }
+
+        $response = $this->callApi(
+            'namedays',
+            [
+                'day'     => $date->day,
+                'month'   => $date->month,
+                'country' => $countryCode
+            ]
+        );
+
+        return [
+            'data' => [
+                'day'                  => $date->day,
+                'month'                => $date->month,
+                'name_' . $countryCode => $response[ 'data' ][ 'namedays' ][ $countryCode ],
+            ],
+        ];
     }
 }
