@@ -14,7 +14,7 @@ class GetTodayNamedayTest extends BaseTest
     public function getTodayBasicCall()
     {
         Carbon::setTestNow(Carbon::create(2021, 5, 28));
-        $response = (new Nameday())->today();
+        $response = (new ApiHandler())->today();
         self::assertArrayHasKey('data', $response);
         self::assertArrayHasKey('day', $response[ 'data' ]);
         self::assertArrayHasKey('month', $response[ 'data' ]);

@@ -9,7 +9,7 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\InvalidArgumentException;
 
-class Nameday
+class ApiHandler
 {
     protected Carbon $carbonToday;
     protected $countryList;
