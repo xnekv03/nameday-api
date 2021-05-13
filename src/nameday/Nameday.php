@@ -11,7 +11,7 @@ use GuzzleHttp\Exception\InvalidArgumentException;
 
 class Nameday
 {
-    protected $carbonToday;
+    protected Carbon $carbonToday;
     protected $countryList;
     protected $baseUrl = 'https://nameday.abalin.net/';
 
@@ -153,6 +153,32 @@ class Nameday
                 'month'                => $date->month,
                 'name_' . $countryCode => $response[ 'data' ][ 'namedays' ][ $countryCode ],
             ],
+        ];
+    }
+
+    public function today(): array
+    {
+        return $this->todayTomorrowYesterday($this->carbonToday);
+    }
+
+    private function todayTomorrowYesterday(Carbon $date): array
+    {
+        $response = $this->callApi(
+            'namedays',
+            [
+                'day'   => $date->day,
+                'month' => $date->month,
+            ]
+        )[ 'data' ][ 'namedays' ];
+
+        foreach ($response as $key => $value) {
+            $names[ 'name_' . $key ] = $value;
+        }
+        $names[ 'day' ] = $date->day;
+        $names[ 'month' ] = $date->month;
+
+        return [
+            'data' => $names,
         ];
     }
 }

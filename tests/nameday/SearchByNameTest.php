@@ -47,12 +47,13 @@ class SearchByNameTest extends BaseTest
     public function invalidCountryDataProvider()
     {
         return [
-            ['Jan', 'czsacxsadcscc'],
+            ['Jan', 'Jan Hammer - Crockett\'s Theme'],
+            ['Jan', 'https://www.youtube.com/watch?v=TRCQmNMOqUY'],
             ['Jan', ''],
             ['Jan', 'h'],
             ['Jan', ' '],
             ['Jan', '   '],
-            ['Jan', 'jduhdwsbferhbferouhbferbgebgb0trbg0trbg0 gh ghiuter '],
+            ['Jan', 'Cry Me A River '],
         ];
     }
 
