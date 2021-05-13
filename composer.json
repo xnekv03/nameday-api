@@ -31,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Nameday\\": "src/nameday/"
+      "Nameday\\": "src/"
     }
   },
   "autoload-dev": {

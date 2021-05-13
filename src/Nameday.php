@@ -27,7 +27,7 @@ class Nameday
             throw new Exception($e->getMessage());
         }
 
-        $this->countryList = json_decode(file_get_contents('src/nameday/data/countryList.json'));
+        $this->countryList = json_decode(file_get_contents('src/data/countryList.json'));
     }
 
 
