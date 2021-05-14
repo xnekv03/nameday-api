@@ -35,8 +35,5 @@ jobs:
       - name: Run code sniffer
         run: composer run-script phpcbf && composer run-script phpcs
 
-      - name: Run phpunit
-        run: composer run-script phpunit
-
       - name: Run phpstan
         run: composer run-script phpstan

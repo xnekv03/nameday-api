@@ -7,30 +7,30 @@ namespace tests;
 use App\NameDay;
 use Carbon\Carbon;
 
-class GetYesterdayNamedayTest extends BaseTest
+class GetTomorrowNamedayTest extends BaseTest
 {
     /** @test */
-    public function getYesterdayBasicCall()
+    public function getTomorrowBasicCall()
     {
-        Carbon::setTestNow(Carbon::create(2021, 5, 29));
-        $response = (new NameDay())->yesterday();
+        Carbon::setTestNow(Carbon::create(2021, 5, 28));
+        $response = (new NameDay())->tomorrow();
         self::assertArrayHasKey('data', $response);
         self::assertArrayHasKey('day', $response[ 'data' ]);
         self::assertArrayHasKey('month', $response[ 'data' ]);
         self::assertArrayHasKey('name_sk', $response[ 'data' ]);
         self::assertArrayHasKey('name_fi', $response[ 'data' ]);
         self::assertArrayHasKey('name_hu', $response[ 'data' ]);
-        self::assertSame('Viliam', $response[ 'data' ][ 'name_sk' ]);
-        self::assertSame('Alma', $response[ 'data' ][ 'name_fi' ]);
-        self::assertSame(28, $response[ 'data' ][ 'day' ]);
+        self::assertSame('Vilma', $response[ 'data' ][ 'name_sk' ]);
+        self::assertSame('Oiva, Oivi', $response[ 'data' ][ 'name_fi' ]);
+        self::assertSame(29, $response[ 'data' ][ 'day' ]);
         self::assertSame(5, $response[ 'data' ][ 'month' ]);
     }
 
     /** @test */
-    public function getYesterdayWithCountry()
+    public function getTomorrowWithCountry()
     {
-        Carbon::setTestNow(Carbon::create(2021, 5, 29));
-        $response = (new NameDay())->yesterday('ee');
+        Carbon::setTestNow(Carbon::create(2021, 5, 28));
+        $response = (new NameDay())->tomorrow('ee');
         self::assertArrayHasKey('data', $response);
         self::assertArrayHasKey('day', $response[ 'data' ]);
         self::assertArrayHasKey('month', $response[ 'data' ]);
@@ -38,54 +38,54 @@ class GetYesterdayNamedayTest extends BaseTest
         self::assertArrayNotHasKey('name_sk', $response[ 'data' ]);
         self::assertArrayNotHasKey('name_fi', $response[ 'data' ]);
         self::assertArrayNotHasKey('name_hu', $response[ 'data' ]);
-        self::assertSame('Roman, Roome, Roomet, Roomo', $response[ 'data' ][ 'name_ee' ]);
-        self::assertSame(28, $response[ 'data' ][ 'day' ]);
+        self::assertSame('Laido, Leido, Leidur, Luulik', $response[ 'data' ][ 'name_ee' ]);
+        self::assertSame(29, $response[ 'data' ][ 'day' ]);
         self::assertSame(5, $response[ 'data' ][ 'month' ]);
     }
-        /** @test */
-    public function getYesterdayWithAllCountriesCountryCode()
+    /** @test */
+    public function getTomorrowWithAllCountriesCountryCode()
     {
-        Carbon::setTestNow(Carbon::create(2021, 5, 29));
+        Carbon::setTestNow(Carbon::create(2021, 5, 28));
         foreach (getAllSupportedCountries() as $item) {
-            $response = (new Nameday())->yesterday($item['countrycode']);
+            $response = (new Nameday())->tomorrow($item['countrycode']);
             self::assertArrayHasKey('data', $response);
             self::assertArrayHasKey('day', $response[ 'data' ]);
             self::assertArrayHasKey('month', $response[ 'data' ]);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response[ 'data' ]);
+            self::assertArrayHasKey('name_' . $item['countrycode'], $response[ 'data' ]);
             self::assertCount(3, $response[ 'data' ]);
-            self::assertSame(28, $response[ 'data' ][ 'day' ]);
+            self::assertSame(29, $response[ 'data' ][ 'day' ]);
             self::assertSame(5, $response[ 'data' ][ 'month' ]);
         }
     }
 
     /** @test */
-    public function getYesterdayWithAllCountriesAlpha3()
+    public function getTomorrowWithAllCountriesAlpha3()
     {
-        Carbon::setTestNow(Carbon::create(2021, 9, 3));
+        Carbon::setTestNow(Carbon::create(2021, 9, 2));
         foreach (getAllSupportedCountries() as $item) {
-            $response = (new Nameday())->yesterday($item['alpha3']);
+            $response = (new Nameday())->tomorrow($item['alpha3']);
             self::assertArrayHasKey('data', $response);
             self::assertArrayHasKey('day', $response[ 'data' ]);
             self::assertArrayHasKey('month', $response[ 'data' ]);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response[ 'data' ]);
+            self::assertArrayHasKey('name_' . $item['countrycode'], $response[ 'data' ]);
             self::assertCount(3, $response[ 'data' ]);
-            self::assertSame(2, $response[ 'data' ][ 'day' ]);
+            self::assertSame(3, $response[ 'data' ][ 'day' ]);
             self::assertSame(9, $response[ 'data' ][ 'month' ]);
         }
     }
 
     /** @test */
-    public function getYesterdayWithAllCountriesWithName()
+    public function getTomorrowWithAllCountriesWithName()
     {
-        Carbon::setTestNow(Carbon::create(2021, 9, 3));
+        Carbon::setTestNow(Carbon::create(2021, 9, 2));
         foreach (getAllSupportedCountries() as $item) {
-            $response = (new Nameday())->yesterday($item['name']);
+            $response = (new Nameday())->tomorrow($item['name']);
             self::assertArrayHasKey('data', $response);
             self::assertArrayHasKey('day', $response[ 'data' ]);
             self::assertArrayHasKey('month', $response[ 'data' ]);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response[ 'data' ]);
+            self::assertArrayHasKey('name_' . $item['countrycode'], $response[ 'data' ]);
             self::assertCount(3, $response[ 'data' ]);
-            self::assertSame(2, $response[ 'data' ][ 'day' ]);
+            self::assertSame(3, $response[ 'data' ][ 'day' ]);
             self::assertSame(9, $response[ 'data' ][ 'month' ]);
         }
     }
