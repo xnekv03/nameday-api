@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'c82db0f2a7bb42edee1ee270285efea89e67ba85',
+    'reference' => 'c9255d9976594694d40d342598224d0550aa4c61',
     'name' => 'xnekv03/nameday-api',
   ),
   'versions' => 
@@ -466,7 +466,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'c82db0f2a7bb42edee1ee270285efea89e67ba85',
+      'reference' => 'c9255d9976594694d40d342598224d0550aa4c61',
     ),
   ),
 );

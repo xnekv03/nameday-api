@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests;
+namespace Test;
 
 use App\NameDay;
 use Carbon\Carbon;

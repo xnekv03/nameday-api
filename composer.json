@@ -35,7 +35,8 @@
       "tests"
     ],
     "psr-4": {
-      "App\\": "src"
+      "App\\": "src",
+      "Test\\": "tests"
     },
     "files": [
       "src/helpers.php"

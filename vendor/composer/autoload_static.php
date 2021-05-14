@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21
+class ComposerStaticInit73b0f18ed021469b7142c6b1313db3ca
 {
     public static $files = array (
         '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
@@ -29,6 +29,10 @@ class ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
+        ),
+        'T' => 
+        array (
+            'Test\\' => 5,
         ),
         'S' => 
         array (
@@ -76,6 +80,10 @@ class ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Test\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -144,7 +152,7 @@ class ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21
     );
 
     public static $classMap = array (
-        'App\\NameDay' => __DIR__ . '/../..' . '/src/NameDay.php',
+        'App\\NameDay' => __DIR__ . '/../..' . '/src/Nameday.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonConverterInterface' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonConverterInterface.php',
@@ -1369,6 +1377,11 @@ class ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21
         'Symfony\\Polyfill\\Ctype\\Ctype' => __DIR__ . '/..' . '/symfony/polyfill-ctype/Ctype.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'Symfony\\Polyfill\\Php80\\Php80' => __DIR__ . '/..' . '/symfony/polyfill-php80/Php80.php',
+        'Test\\BaseTest' => __DIR__ . '/../..' . '/tests/BaseTest.php',
+        'Test\\GetTodayNamedayTest' => __DIR__ . '/../..' . '/tests/GetTodayNamedayTest.php',
+        'Test\\GetTomorrowNamedayTest' => __DIR__ . '/../..' . '/tests/GetTomorrowNamedayTest.php',
+        'Test\\GetYesterdayNamedayTest' => __DIR__ . '/../..' . '/tests/GetYesterdayNamedayTest.php',
+        'Test\\SearchByNameTest' => __DIR__ . '/../..' . '/tests/SearchByNameTest.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
         'TheSeer\\Tokenizer\\NamespaceUri' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUri.php',
         'TheSeer\\Tokenizer\\NamespaceUriException' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUriException.php',
@@ -1462,17 +1475,14 @@ class ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
         'phpDocumentor\\Reflection\\Utils' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/Utils.php',
-        'tests\\BaseTest' => __DIR__ . '/../..' . '/tests/BaseTest.php',
-        'tests\\GetTodayNamedayTest' => __DIR__ . '/../..' . '/tests/GetTodayNamedayTest.php',
-        'tests\\SearchByNameTest' => __DIR__ . '/../..' . '/tests/SearchByNameTest.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInita8e29b8d35ad1c612706e189aeadeb21::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit73b0f18ed021469b7142c6b1313db3ca::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit73b0f18ed021469b7142c6b1313db3ca::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit73b0f18ed021469b7142c6b1313db3ca::$classMap;
 
         }, null, ClassLoader::class);
     }

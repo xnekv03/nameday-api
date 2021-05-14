@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\NameDay' => $baseDir . '/src/NameDay.php',
+    'App\\NameDay' => $baseDir . '/src/Nameday.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonConverterInterface' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonConverterInterface.php',
@@ -1231,6 +1231,11 @@ return array(
     'Symfony\\Polyfill\\Ctype\\Ctype' => $vendorDir . '/symfony/polyfill-ctype/Ctype.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
     'Symfony\\Polyfill\\Php80\\Php80' => $vendorDir . '/symfony/polyfill-php80/Php80.php',
+    'Test\\BaseTest' => $baseDir . '/tests/BaseTest.php',
+    'Test\\GetTodayNamedayTest' => $baseDir . '/tests/GetTodayNamedayTest.php',
+    'Test\\GetTomorrowNamedayTest' => $baseDir . '/tests/GetTomorrowNamedayTest.php',
+    'Test\\GetYesterdayNamedayTest' => $baseDir . '/tests/GetYesterdayNamedayTest.php',
+    'Test\\SearchByNameTest' => $baseDir . '/tests/SearchByNameTest.php',
     'TheSeer\\Tokenizer\\Exception' => $vendorDir . '/theseer/tokenizer/src/Exception.php',
     'TheSeer\\Tokenizer\\NamespaceUri' => $vendorDir . '/theseer/tokenizer/src/NamespaceUri.php',
     'TheSeer\\Tokenizer\\NamespaceUriException' => $vendorDir . '/theseer/tokenizer/src/NamespaceUriException.php',
@@ -1324,7 +1329,4 @@ return array(
     'phpDocumentor\\Reflection\\Types\\This' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/This.php',
     'phpDocumentor\\Reflection\\Types\\Void_' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Void_.php',
     'phpDocumentor\\Reflection\\Utils' => $vendorDir . '/phpdocumentor/reflection-docblock/src/Utils.php',
-    'tests\\BaseTest' => $baseDir . '/tests/BaseTest.php',
-    'tests\\GetTodayNamedayTest' => $baseDir . '/tests/GetTodayNamedayTest.php',
-    'tests\\SearchByNameTest' => $baseDir . '/tests/SearchByNameTest.php',
 );
