@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace Test;
 
 use PHPUnit\Framework\TestCase;
 use App\NameDay;

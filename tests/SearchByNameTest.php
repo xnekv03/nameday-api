@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace Test;
 
 use App\NameDay;
 use GuzzleHttp\Exception\InvalidArgumentException;
