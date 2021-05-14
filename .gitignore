@@ -1,6 +1,4 @@
 vendor/
 .idea/
 composer.lock
-index.php
-runTests.sh
 .phpunit.result.cache
