@@ -52,7 +52,7 @@ class GetTomorrowNamedayTest extends BaseTest
             self::assertArrayHasKey('data', $response);
             self::assertArrayHasKey('day', $response['data']);
             self::assertArrayHasKey('month', $response['data']);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response['data']);
+            self::assertArrayHasKey('name_' . $item['countrycode'], $response['data']);
             self::assertCount(3, $response['data']);
             self::assertSame(29, $response['data']['day']);
             self::assertSame(5, $response['data']['month']);
@@ -68,7 +68,7 @@ class GetTomorrowNamedayTest extends BaseTest
             self::assertArrayHasKey('data', $response);
             self::assertArrayHasKey('day', $response['data']);
             self::assertArrayHasKey('month', $response['data']);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response['data']);
+            self::assertArrayHasKey('name_' . $item['countrycode'], $response['data']);
             self::assertCount(3, $response['data']);
             self::assertSame(3, $response['data']['day']);
             self::assertSame(9, $response['data']['month']);
@@ -84,7 +84,7 @@ class GetTomorrowNamedayTest extends BaseTest
             self::assertArrayHasKey('data', $response);
             self::assertArrayHasKey('day', $response['data']);
             self::assertArrayHasKey('month', $response['data']);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response['data']);
+            self::assertArrayHasKey('name_' . $item['countrycode'], $response['data']);
             self::assertCount(3, $response['data']);
             self::assertSame(3, $response['data']['day']);
             self::assertSame(9, $response['data']['month']);
