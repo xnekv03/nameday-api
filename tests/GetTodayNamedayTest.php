@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Test;
 
-use App\NameDay;
+use App\Nameday;
 use Carbon\Carbon;
 
 class GetTodayNamedayTest extends BaseTest
