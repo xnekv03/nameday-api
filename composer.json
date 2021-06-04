@@ -19,7 +19,7 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "php": ">=7.4|8.*",
+    "php": "7.4|8.*",
     "ext-json": "*",
     "nesbot/carbon": "2.48.*",
     "guzzlehttp/guzzle": "^7.3"
@@ -31,12 +31,10 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\": "src",
-      "Test\\": "tests"
+      "App\\": "src/",
+      "Test\\": "tests/"
     },
-    "files": [
-      "src/helpers.php"
-    ]
+    "files": ["src/helpers.php"]
   },
   "scripts": {
     "build": [
