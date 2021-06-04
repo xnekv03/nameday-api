@@ -3,16 +3,17 @@
          backupStaticAttributes="false" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true"
          convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage>
-        <include>
-            <directory suffix=".php">src/</directory>
-        </include>
-    </coverage>
     <testsuites>
         <testsuite name="Project Test Suite">
-          <directory>./tests/App</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
     <php>
         <env name="APP_ENV" value="testing"/>
     </php>
