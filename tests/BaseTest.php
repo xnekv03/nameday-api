@@ -3,7 +3,7 @@
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
-use NameDay;
+use App\NameDay;
 
 abstract class BaseTest extends TestCase
 {
