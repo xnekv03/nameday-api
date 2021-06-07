@@ -1,6 +1,6 @@
-The MIT License
+The MIT License (MIT)
 
-Copyright (c) Vojtech Nekvapil, Inc. https://abalin.net
+Copyright (c) xnekv03 <fby@post.cz>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -1,6 +1,6 @@
 {
   "name": "xnekv03/nameday-api",
-  "description": "Nameday API library for https://api.abalin.net",
+  "description": "Nameday API library for https://nameday.abalin.net",
   "type": "library",
   "keywords": [
     "api",
@@ -8,46 +8,51 @@
     "name day",
     "international"
   ],
-  "homepage": "https://api.abalin.net",
+  "homepage": "https://github.com/xnekv03/api_nameday",
   "license": "MIT",
   "authors": [
     {
-      "name": "Vojta Nekvapil",
-      "homepage": "https://api.abalin.net",
-      "email": "fby@post.cz"
+      "name": "Vojtěch Nekvapil",
+      "email": "fby@post.cz",
+      "role": "Developer"
     }
   ],
-  "minimum-stability": "stable",
   "require": {
-    "php": ">=7.1",
+    "php": "7.4|8.*",
     "ext-json": "*",
-    "nesbot/carbon": "^2.28",
-    "guzzlehttp/guzzle": "^6.5"
+    "nesbot/carbon": "2.48.*",
+    "guzzlehttp/guzzle": "^7.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.3",
-    "phpstan/phpstan": "^0.12.3",
-    "squizlabs/php_codesniffer": "3.*"
+    "friendsofphp/php-cs-fixer": "^2.17",
+    "phpunit/phpunit": "^9.5",
+    "spatie/ray": "^1.10",
+    "vimeo/psalm": "^4.3",
+    "phpstan/phpstan": "0.12.*",
+    "squizlabs/php_codesniffer": "3.6.0"
   },
   "autoload": {
     "psr-4": {
-      "Nameday\\": "src/nameday/"
-    }
+      "Xnekv03\\ApiNameday\\": "src"
+    },
+    "files": [
+      "src/helpers/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
-      "Nameday\\": "tests/nameday/"
+      "Xnekv03\\ApiNameday\\Tests\\": "tests"
     }
   },
   "scripts": {
-    "build": [
-      "@composer install --no-progress --no-interaction --no-suggest --no-scripts",
-      "@phpcs",
-      "@phpunit",
-      "@phpstan"
-    ],
-    "phpunit": "vendor/bin/phpunit tests/ -v",
-    "phpcs": "vendor/bin/phpcs --colors -v --standard=PSR2 src tests",
-    "phpstan": "vendor/bin/phpstan analyse -v src tests"
-  }
+    "psalm": "vendor/bin/psalm",
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

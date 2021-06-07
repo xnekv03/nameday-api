@@ -1,0 +1,102 @@
+[
+  {
+    "name": "austria",
+    "countrycode": "at",
+    "alpha3": "aut"
+  },
+  {
+    "name": "czechia",
+    "countrycode": "cz",
+    "alpha3": "cze"
+  },
+  {
+    "name": "finland",
+    "countrycode": "fi",
+    "alpha3": "fin"
+  },
+  {
+    "name": "greece",
+    "countrycode": "gr",
+    "alpha3": "grc"
+  },
+  {
+    "name": "latvia",
+    "countrycode": "lv",
+    "alpha3": "lva"
+  },
+  {
+    "name": "russian federation",
+    "countrycode": "ru",
+    "alpha3": "rus"
+  },
+  {
+    "name": "sweden",
+    "countrycode": "se",
+    "alpha3": "swe"
+  },
+  {
+    "name": "bulgaria",
+    "countrycode": "bg",
+    "alpha3": "bgr"
+  },
+  {
+    "name": "denmark",
+    "countrycode": "dk",
+    "alpha3": "dnk"
+  },
+  {
+    "name": "france",
+    "countrycode": "fr",
+    "alpha3": "fra"
+  },
+  {
+    "name": "hungary",
+    "countrycode": "hu",
+    "alpha3": "hun"
+  },
+  {
+    "name": "lithuania",
+    "countrycode": "lt",
+    "alpha3": "ltu"
+  },
+  {
+    "name": "slovakia",
+    "countrycode": "sk",
+    "alpha3": "svk"
+  },
+  {
+    "name": "united states of america",
+    "countrycode": "us",
+    "alpha3": "usa"
+  },
+  {
+    "name": "croatia",
+    "countrycode": "hr",
+    "alpha3": "hrv"
+  },
+  {
+    "name": "estonia",
+    "countrycode": "ee",
+    "alpha3": "est"
+  },
+  {
+    "name": "germany",
+    "countrycode": "de",
+    "alpha3": "deu"
+  },
+  {
+    "name": "italy",
+    "countrycode": "it",
+    "alpha3": "ita"
+  },
+  {
+    "name": "poland",
+    "countrycode": "pl",
+    "alpha3": "pol"
+  },
+  {
+    "name": "spain",
+    "countrycode": "es",
+    "alpha3": "esp"
+  }
+]
