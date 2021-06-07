@@ -7,7 +7,6 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\InvalidArgumentException;
 
-
 class ApiNamedayClass
 {
     protected Carbon $carbonToday;

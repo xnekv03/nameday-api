@@ -3,10 +3,10 @@
 namespace Xnekv03\ApiNameday\Tests;
 
 use GuzzleHttp\Exception\InvalidArgumentException;
-use Xnekv03\ApiNameday\ApiNamedayClass;
-
 use function PHPUnit\Framework\assertArrayHasKey;
+
 use function PHPUnit\Framework\assertSame;
+use Xnekv03\ApiNameday\ApiNamedayClass;
 
 class SearchByNameTest extends BaseTest
 {

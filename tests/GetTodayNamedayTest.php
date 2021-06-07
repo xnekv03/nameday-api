@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xnekv03\ApiNameday\Tests;
 
-
 use Carbon\Carbon;
 use Xnekv03\ApiNameday\ApiNamedayClass;
 
