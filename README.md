@@ -1,7 +1,7 @@
 # Official International Name days API library
 ## Name day API library for [nameday.abalin.net](https://nameday.abalin.net)
 This library makes it easy to send requests towards [nameday.abalin.net](https://nameday.abalin.net) API.
-API provides name days for various countries.
+API provides name days for various countries. 
 
 ## Installation
 
@@ -138,7 +138,7 @@ echo $nameday->tomorrow(); # will return today name days according to given UTC 
 ```
 
 ### Certificate
-Make sure you have proper certificates stored on your local machine as Name day API uses HTTPS only.
+Make sure you have proper certificates stored on your local machine as Name day API uses HTTPS only. 
 
 If you run into problems with server certificate try downloading the [The Mozilla CA certificate store](https://curl.haxx.se/docs/caextract.html), save it on your system and configure ```php.ini```
 ```ini

@@ -8,16 +8,15 @@
     "name day",
     "international"
   ],
-  "homepage": "https://nameday.abalin.net",
+  "homepage": "https://github.com/xnekv03/api_nameday",
   "license": "MIT",
   "authors": [
     {
-      "name": "Vojta Nekvapil",
-      "homepage": "https://nameday.abalin.net",
-      "email": "fby@post.cz"
+      "name": "Vojtěch Nekvapil",
+      "email": "fby@post.cz",
+      "role": "Developer"
     }
   ],
-  "minimum-stability": "stable",
   "require": {
     "php": "7.4|8.*",
     "ext-json": "*",
@@ -25,27 +24,35 @@
     "guzzlehttp/guzzle": "^7.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "9.5.*",
+    "friendsofphp/php-cs-fixer": "^2.17",
+    "phpunit/phpunit": "^9.5",
+    "spatie/ray": "^1.10",
+    "vimeo/psalm": "^4.3",
     "phpstan/phpstan": "0.12.*",
     "squizlabs/php_codesniffer": "3.6.0"
   },
   "autoload": {
     "psr-4": {
-      "App\\": "src/",
-      "Test\\": "tests/"
+      "Xnekv03\\ApiNameday\\": "src"
     },
-    "files": ["src/helpers.php"]
+    "files": [
+      "src/helpers/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Xnekv03\\ApiNameday\\Tests\\": "tests"
+    }
   },
   "scripts": {
-    "build": [
-      "@composer install --no-progress --no-interaction --no-suggest --no-scripts",
-      "@phpcs",
-      "@phpunit",
-      "@phpstan"
-    ],
-    "phpunit": "vendor/bin/phpunit tests/ -v --color",
-    "phpcbf": "vendor/bin/phpcbf --colors -v --standard=PSR12 src/ tests/",
-    "phpcs": "vendor/bin/phpcs --colors -v --standard=PSR12 src/ tests/",
-    "phpstan": "vendor/bin/phpstan analyse -v --level=5 src/ tests/"
-  }
+    "psalm": "vendor/bin/psalm",
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

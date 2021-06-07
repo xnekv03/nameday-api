@@ -1,18 +1,18 @@
 <?php
 
-namespace Test;
+namespace Xnekv03\ApiNameday\Tests;
 
 use PHPUnit\Framework\TestCase;
-use App\NameDay;
+use Xnekv03\ApiNameday\ApiNamedayClass;
 
 abstract class BaseTest extends TestCase
 {
-    public NameDay $nd;
+    public ApiNamedayClass $nd;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->nd = new NameDay();
+        $this->nd = new ApiNamedayClass();
     }
 }

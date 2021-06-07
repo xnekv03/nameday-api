@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace Xnekv03\ApiNameday;
 
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\InvalidArgumentException;
 
-class NameDay
+
+class ApiNamedayClass
 {
     protected Carbon $carbonToday;
     protected $countryList;
@@ -28,7 +29,6 @@ class NameDay
         $this->countryList = json_decode(file_get_contents('src/data/countryList.json'));
     }
 
-
     public function searchByName(string $name, string $country): array
     {
         $name = trim($name);
@@ -46,22 +46,22 @@ class NameDay
         $response = $this->callApi(
             'getdate',
             [
-                'name'    => $name,
-                'country' => $countryCode
+                'name' => $name,
+                'country' => $countryCode,
             ]
         );
 
         foreach ($response[ 'data' ][ 'namedays' ] as $nd) {
             $results[] = [
-                'day'   => $nd[ 'day' ],
+                'day' => $nd[ 'day' ],
                 'month' => $nd[ 'month' ],
-                'name'  => $nd[ 'name' ],
+                'name' => $nd[ 'name' ],
             ];
         }
 
         return [
             'calendar' => $countryCode,
-            'results'  => $results ?? [],
+            'results' => $results ?? [],
         ];
     }
 
@@ -79,15 +79,16 @@ class NameDay
 
         foreach ($this->countryList as $item) {
             if (
-                !(
+            ! (
                 strcasecmp($country, $item->countrycode)
                 && strcasecmp($country, $item->name)
                 && strcasecmp($country, $item->alpha3)
-                )
+            )
             ) {
                 return $item->countrycode;
             }
         }
+
         return null;
     }
 
@@ -102,7 +103,7 @@ class NameDay
                 'POST',
                 $this->baseUrl . $urlParameter,
                 [
-                    'form_params' => is_null($formParams) ? [] : $formParams
+                    'form_params' => is_null($formParams) ? [] : $formParams,
                 ]
             );
         } catch (Exception $e) {
@@ -125,7 +126,7 @@ class NameDay
      */
     public function specificDay(int $day, int $month, string $country): array
     {
-        if (!checkdate($month, $day, 2016)) {
+        if (! checkdate($month, $day, 2016)) {
             throw new InvalidArgumentException('Invalid date');
         }
 
@@ -139,16 +140,16 @@ class NameDay
         $response = $this->callApi(
             'namedays',
             [
-                'day'     => $date->day,
-                'month'   => $date->month,
-                'country' => $countryCode
+                'day' => $date->day,
+                'month' => $date->month,
+                'country' => $countryCode,
             ]
         );
 
         return [
             'data' => [
-                'day'                  => $date->day,
-                'month'                => $date->month,
+                'day' => $date->day,
+                'month' => $date->month,
                 'name_' . $countryCode => $response[ 'data' ][ 'namedays' ][ $countryCode ],
             ],
         ];
@@ -168,9 +169,10 @@ class NameDay
     {
         return $this->todayTomorrowYesterday($this->carbonToday->addDay(), $country);
     }
+
     private function todayTomorrowYesterday(Carbon $date, string $country = null): array
     {
-        if (!is_null($country)) {
+        if (! is_null($country)) {
             $countryCode = $this->countryCodeCheck($country);
             if (is_null($countryCode)) {
                 throw new InvalidArgumentException('Invalid country code');
@@ -180,7 +182,7 @@ class NameDay
         $response = $this->callApi(
             'namedays',
             [
-                'day'   => $date->day,
+                'day' => $date->day,
                 'month' => $date->month,
             ]
         )[ 'data' ][ 'namedays' ];
