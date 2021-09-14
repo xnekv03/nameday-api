@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('getAllSupportedCountries')) {
+if (!function_exists('getAllSupportedCountries')) {
     /**
      * @return array|null
      */
