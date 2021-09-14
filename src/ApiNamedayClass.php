@@ -15,6 +15,7 @@ class ApiNamedayClass
 
     /**
      * @param string|null $timeZone
+     *
      * @throws Exception
      */
     public function __construct(string $timeZone = null)
@@ -41,33 +42,34 @@ class ApiNamedayClass
             throw new InvalidArgumentException('Invalid country code');
         }
 
-
         $response = $this->callApi(
             'getdate',
             [
-                'name' => $name,
+                'name'    => $name,
                 'country' => $countryCode,
             ]
         );
 
-        foreach ($response[ 'data' ][ 'namedays' ] as $nd) {
+        foreach ($response['data']['namedays'] as $nd) {
             $results[] = [
-                'day' => $nd[ 'day' ],
-                'month' => $nd[ 'month' ],
-                'name' => $nd[ 'name' ],
+                'day'   => $nd['day'],
+                'month' => $nd['month'],
+                'name'  => $nd['name'],
             ];
         }
 
         return [
             'calendar' => $countryCode,
-            'results' => $results ?? [],
+            'results'  => $results ?? [],
         ];
     }
 
     /**
      * @param string $country
-     * @return string
+     *
      * @throws InvalidArgumentException
+     *
+     * @return string
      */
     private function countryCodeCheck(string $country): ?string
     {
@@ -78,7 +80,7 @@ class ApiNamedayClass
 
         foreach ($this->countryList as $item) {
             if (
-            ! (
+            !(
                 strcasecmp($country, $item->countrycode)
                 && strcasecmp($country, $item->name)
                 && strcasecmp($country, $item->alpha3)
@@ -93,6 +95,7 @@ class ApiNamedayClass
 
     /**
      * @param string $urlParameter
+     *
      * @return array
      */
     private function callApi(string $urlParameter, array $formParams = null): array
@@ -100,7 +103,7 @@ class ApiNamedayClass
         try {
             $response = (new Client())->request(
                 'POST',
-                $this->baseUrl . $urlParameter,
+                $this->baseUrl.$urlParameter,
                 [
                     'form_params' => is_null($formParams) ? [] : $formParams,
                 ]
@@ -117,15 +120,17 @@ class ApiNamedayClass
     }
 
     /**
-     * @param int $day
-     * @param int $month
+     * @param int    $day
+     * @param int    $month
      * @param string $country
-     * @return array
+     *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     public function specificDay(int $day, int $month, string $country): array
     {
-        if (! checkdate($month, $day, 2016)) {
+        if (!checkdate($month, $day, 2016)) {
             throw new InvalidArgumentException('Invalid date');
         }
 
@@ -139,17 +144,17 @@ class ApiNamedayClass
         $response = $this->callApi(
             'namedays',
             [
-                'day' => $date->day,
-                'month' => $date->month,
+                'day'     => $date->day,
+                'month'   => $date->month,
                 'country' => $countryCode,
             ]
         );
 
         return [
             'data' => [
-                'day' => $date->day,
-                'month' => $date->month,
-                'name_' . $countryCode => $response[ 'data' ][ 'namedays' ][ $countryCode ],
+                'day'                => $date->day,
+                'month'              => $date->month,
+                'name_'.$countryCode => $response['data']['namedays'][$countryCode],
             ],
         ];
     }
@@ -171,7 +176,7 @@ class ApiNamedayClass
 
     private function todayTomorrowYesterday(Carbon $date, string $country = null): array
     {
-        if (! is_null($country)) {
+        if (!is_null($country)) {
             $countryCode = $this->countryCodeCheck($country);
             if (is_null($countryCode)) {
                 throw new InvalidArgumentException('Invalid country code');
@@ -181,21 +186,21 @@ class ApiNamedayClass
         $response = $this->callApi(
             'namedays',
             [
-                'day' => $date->day,
+                'day'   => $date->day,
                 'month' => $date->month,
             ]
-        )[ 'data' ][ 'namedays' ];
+        )['data']['namedays'];
 
         if (isset($countryCode)) {
-            $names[ 'name_' . $countryCode ] = $response[ $countryCode ];
+            $names['name_'.$countryCode] = $response[$countryCode];
         } else {
             foreach ($response as $key => $value) {
-                $names[ 'name_' . $key ] = $value;
+                $names['name_'.$key] = $value;
             }
         }
 
-        $names[ 'day' ] = $date->day;
-        $names[ 'month' ] = $date->month;
+        $names['day'] = $date->day;
+        $names['month'] = $date->month;
 
         return [
             'data' => $names,
