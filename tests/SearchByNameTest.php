@@ -4,7 +4,6 @@ namespace Xnekv03\ApiNameday\Tests;
 
 use GuzzleHttp\Exception\InvalidArgumentException;
 use function PHPUnit\Framework\assertArrayHasKey;
-
 use function PHPUnit\Framework\assertSame;
 use Xnekv03\ApiNameday\ApiNamedayClass;
 
@@ -65,10 +64,10 @@ class SearchByNameTest extends BaseTest
 
         assertArrayHasKey('calendar', $response);
         assertArrayHasKey('results', $response);
-        assertSame($country, $response[ 'calendar' ]);
+        assertSame($country, $response['calendar']);
         assertSame(
             $expected,
-            $response[ 'results' ]
+            $response['results']
         );
     }
 
@@ -85,19 +84,19 @@ class SearchByNameTest extends BaseTest
                 'cz',
                 [
                     [
-                        'day' => 24,
+                        'day'   => 24,
                         'month' => 5,
-                        'name' => 'Jana',
+                        'name'  => 'Jana',
                     ],
                     [
-                        'day' => 24,
+                        'day'   => 24,
                         'month' => 6,
-                        'name' => 'Jan',
+                        'name'  => 'Jan',
                     ],
                     [
-                        'day' => 6,
+                        'day'   => 6,
                         'month' => 7,
-                        'name' => 'Upálení mistra Jana Husa',
+                        'name'  => 'Upálení mistra Jana Husa',
                     ],
                 ],
             ],
@@ -106,9 +105,9 @@ class SearchByNameTest extends BaseTest
                 'sk',
                 [
                     [
-                        'day' => 2,
+                        'day'   => 2,
                         'month' => 4,
-                        'name' => 'Zita',
+                        'name'  => 'Zita',
                     ],
                 ],
             ],
@@ -117,16 +116,16 @@ class SearchByNameTest extends BaseTest
                 'us',
                 [
                     [
-                        'day' => 24,
+                        'day'   => 24,
                         'month' => 6,
-                        'name' => 'Hans, Giovanna, Giovanni, Ian, Ivan, Jan, Jana, Jean, Jeanette, Jeannette,'
-                            . ' Johan, John, Johnnie, Johnny, Juan, Juana, Juanita, Sean, Shana, Shane, Shanna, Yancy',
+                        'name'  => 'Hans, Giovanna, Giovanni, Ian, Ivan, Jan, Jana, Jean, Jeanette, Jeannette,'
+                            .' Johan, John, Johnnie, Johnny, Juan, Juana, Juanita, Sean, Shana, Shane, Shanna, Yancy',
                     ],
                     [
-                        'day' => 11,
+                        'day'   => 11,
                         'month' => 11,
-                        'name' => 'Chandler, Dallas, Jalen, Johnathan, Johnathon, '
-                            . 'Jon, Jonatan, Jonathan, Jonathon, Jonte, Jorel, Jorrell, Lincoln',
+                        'name'  => 'Chandler, Dallas, Jalen, Johnathan, Johnathon, '
+                            .'Jon, Jonatan, Jonathan, Jonathon, Jonte, Jorel, Jorrell, Lincoln',
                     ],
                 ],
             ],
