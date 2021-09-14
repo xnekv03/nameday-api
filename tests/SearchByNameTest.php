@@ -84,19 +84,19 @@ class SearchByNameTest extends BaseTest
                 'cz',
                 [
                     [
-                        'day' => 24,
+                        'day'   => 24,
                         'month' => 5,
-                        'name' => 'Jana',
+                        'name'  => 'Jana',
                     ],
                     [
-                        'day' => 24,
+                        'day'   => 24,
                         'month' => 6,
-                        'name' => 'Jan',
+                        'name'  => 'Jan',
                     ],
                     [
-                        'day' => 6,
+                        'day'   => 6,
                         'month' => 7,
-                        'name' => 'Upálení mistra Jana Husa',
+                        'name'  => 'Upálení mistra Jana Husa',
                     ],
                 ],
             ],
@@ -105,9 +105,9 @@ class SearchByNameTest extends BaseTest
                 'sk',
                 [
                     [
-                        'day' => 2,
+                        'day'   => 2,
                         'month' => 4,
-                        'name' => 'Zita',
+                        'name'  => 'Zita',
                     ],
                 ],
             ],
@@ -116,15 +116,15 @@ class SearchByNameTest extends BaseTest
                 'us',
                 [
                     [
-                        'day' => 24,
+                        'day'   => 24,
                         'month' => 6,
-                        'name' => 'Hans, Giovanna, Giovanni, Ian, Ivan, Jan, Jana, Jean, Jeanette, Jeannette,'
+                        'name'  => 'Hans, Giovanna, Giovanni, Ian, Ivan, Jan, Jana, Jean, Jeanette, Jeannette,'
                             .' Johan, John, Johnnie, Johnny, Juan, Juana, Juanita, Sean, Shana, Shane, Shanna, Yancy',
                     ],
                     [
-                        'day' => 11,
+                        'day'   => 11,
                         'month' => 11,
-                        'name' => 'Chandler, Dallas, Jalen, Johnathan, Johnathon, '
+                        'name'  => 'Chandler, Dallas, Jalen, Johnathan, Johnathon, '
                             .'Jon, Jonatan, Jonathan, Jonathon, Jonte, Jorel, Jorrell, Lincoln',
                     ],
                 ],
