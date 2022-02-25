@@ -28,11 +28,11 @@ class GetTodayNamedayTest extends BaseTest
     {
         Carbon::setTestNow(Carbon::create(2021, 9, 2));
         $response = (new ApiNamedayClass())->today('ee');
-      self::assertArrayHasKey('day', $response);
-      self::assertArrayHasKey('month', $response);
-      self::assertArrayHasKey('nameday', $response);
-      self::assertSame('Maive, Maivi, Taive, Taivi', $response['nameday']['ee']);
-      self::assertSame(2, $response['day']);
-      self::assertSame(9, $response['month']);
+        self::assertArrayHasKey('day', $response);
+        self::assertArrayHasKey('month', $response);
+        self::assertArrayHasKey('nameday', $response);
+        self::assertSame('Maive, Maivi, Taive, Taivi', $response['nameday']['ee']);
+        self::assertSame(2, $response['day']);
+        self::assertSame(9, $response['month']);
     }
 }
