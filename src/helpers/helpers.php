@@ -6,6 +6,6 @@ if (!function_exists('getAllSupportedCountries')) {
      */
     function getAllSupportedCountries(): array
     {
-        return json_decode(file_get_contents('src/data/countryList.json'), true);
+        return json_decode(file_get_contents('src/data/countryList.php'), true);
     }
 }

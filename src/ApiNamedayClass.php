@@ -6,204 +6,106 @@ use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\InvalidArgumentException;
+use Xnekv03\ApiNameday\traits\ValidationTrait;
 
-class ApiNamedayClass
-{
-    protected Carbon $carbonToday;
-    protected $countryList;
-    protected $baseUrl = 'https://nameday.abalin.net/';
+class ApiNamedayClass{
+  protected Carbon $carbonToday;
+  protected string $baseUrl = 'https://nameday.abalin.net/api/V1/';
+  protected string $defaultTimeZone = 'Europe/Prague';
+  use ValidationTrait;
 
-    /**
-     * @param string|null $timeZone
-     *
-     * @throws Exception
-     */
-    public function __construct(string $timeZone = null)
-    {
-        try {
-            $this->carbonToday = is_null($timeZone) ? Carbon::now() : Carbon::now($timeZone);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+  /**
+   * @param string|null $timeZone
+   *
+   * @throws Exception
+   */
+  public function __construct(string $timeZone = null){
+    try{
+      $this->carbonToday = Carbon::now($timeZone ?? $this->defaultTimeZone);
+    }
+    catch(Exception $e){
+      throw new Exception($e->getMessage());
+    }
+  }
 
-        $this->countryList = json_decode(file_get_contents('src/data/countryList.json'));
+  /**
+   * @throws Exception
+   */
+  public function today($countryCode = null): array{
+    if(!is_null($countryCode)){
+      $this->validateCountryCode($countryCode);
     }
 
-    public function searchByName(string $name, string $country): array
-    {
-        $name = trim($name);
+    return $this->getSpecificDay($this->carbonToday, $countryCode);
+  }
 
-        if (strlen($name) < 3) {
-            throw new InvalidArgumentException('The name must be at least 3 characters');
-        }
-
-        $countryCode = $this->countryCodeCheck($country);
-        if (is_null($countryCode)) {
-            throw new InvalidArgumentException('Invalid country code');
-        }
-
-        $response = $this->callApi(
-            'getdate',
-            [
-                'name'    => $name,
-                'country' => $countryCode,
-            ]
-        );
-
-        foreach ($response['data']['namedays'] as $nd) {
-            $results[] = [
-                'day'   => $nd['day'],
-                'month' => $nd['month'],
-                'name'  => $nd['name'],
-            ];
-        }
-
-        return [
-            'calendar' => $countryCode,
-            'results'  => $results ?? [],
-        ];
+  /**
+   * @throws Exception
+   */
+  public function tomorrow($countryCode = null): array{
+    if(!is_null($countryCode)){
+      $this->validateCountryCode($countryCode);
     }
 
-    /**
-     * @param string $country
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return string
-     */
-    private function countryCodeCheck(string $country): ?string
-    {
-        $country = trim($country);
-        if (strlen($country) < 2) {
-            return null;
-        }
+    return $this->getSpecificDay($this->carbonToday->addDay(), $countryCode);
+  }
 
-        foreach ($this->countryList as $item) {
-            if (
-            !(
-                strcasecmp($country, $item->countrycode)
-                && strcasecmp($country, $item->name)
-                && strcasecmp($country, $item->alpha3)
-            )
-            ) {
-                return $item->countrycode;
-            }
-        }
-
-        return null;
+  /**
+   * @throws Exception
+   */
+  public function yesterday($countryCode = null): array{
+    if(!is_null($countryCode)){
+      $this->validateCountryCode($countryCode);
     }
 
-    /**
-     * @param string $urlParameter
-     *
-     * @return array
-     */
-    private function callApi(string $urlParameter, array $formParams = null): array
-    {
-        try {
-            $response = (new Client())->request(
-                'POST',
-                $this->baseUrl.$urlParameter,
-                [
-                    'form_params' => is_null($formParams) ? [] : $formParams,
-                ]
-            );
-        } catch (Exception $e) {
-            throw new InvalidArgumentException($e->getMessage());
-        }
+    return $this->getSpecificDay($this->carbonToday->subDay(), $countryCode);
+  }
 
-        if ($response->getStatusCode() !== 200) {
-            throw new Exception('Unsuccessfull call');
-        }
+  /**
+   * @throws \JsonException
+   */
+  public function searchByName(string $name, string $countryCode): array{
+    $this->validateSearchName($name, $countryCode);
 
-        return json_decode($response->getBody()->getContents(), true);
+    return $this->callApi('getname', [
+      'name' => $name,
+      'country' => $countryCode,
+    ]);
+  }
+
+  private function getSpecificDay(Carbon $date, string $countryCode = null): array{
+    $parameters = [
+      'day' => $date->day,
+      'month' => $date->month,
+    ];
+
+    if(!is_null($countryCode)){
+      $parameters = array_merge($parameters, ['country' => $countryCode]);
     }
 
-    /**
-     * @param int    $day
-     * @param int    $month
-     * @param string $country
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return array
-     */
-    public function specificDay(int $day, int $month, string $country): array
-    {
-        if (!checkdate($month, $day, 2016)) {
-            throw new InvalidArgumentException('Invalid date');
-        }
+    return $this->callApi('getdate', $parameters);
+  }
 
-        $date = Carbon::createFromDate(2016, $month, $day, $this->carbonToday->timezoneName);
-
-        $countryCode = $this->countryCodeCheck($country);
-        if (is_null($countryCode)) {
-            throw new InvalidArgumentException('Invalid country code');
-        }
-
-        $response = $this->callApi(
-            'namedays',
-            [
-                'day'     => $date->day,
-                'month'   => $date->month,
-                'country' => $countryCode,
-            ]
-        );
-
-        return [
-            'data' => [
-                'day'                => $date->day,
-                'month'              => $date->month,
-                'name_'.$countryCode => $response['data']['namedays'][$countryCode],
-            ],
-        ];
+  /**
+   * @param string $urlParameter
+   *
+   * @return array
+   * @throws \JsonException
+   */
+  private function callApi(string $urlParameter, array $formParams = null): array{
+    try{
+      $response = (new Client())->request('POST', $this->baseUrl.$urlParameter, [
+        'form_params' => $formParams ?? [],
+      ]);
+    }
+    catch(Exception $e){
+      throw new InvalidArgumentException($e->getMessage());
     }
 
-    public function today(string $country = null): array
-    {
-        return $this->todayTomorrowYesterday($this->carbonToday, $country);
+    if($response->getStatusCode() !== 200){
+      throw new \RuntimeException('Unsuccessfull call');
     }
 
-    public function yesterday(string $country = null): array
-    {
-        return $this->todayTomorrowYesterday($this->carbonToday->subDay(), $country);
-    }
-
-    public function tomorrow(string $country = null): array
-    {
-        return $this->todayTomorrowYesterday($this->carbonToday->addDay(), $country);
-    }
-
-    private function todayTomorrowYesterday(Carbon $date, string $country = null): array
-    {
-        if (!is_null($country)) {
-            $countryCode = $this->countryCodeCheck($country);
-            if (is_null($countryCode)) {
-                throw new InvalidArgumentException('Invalid country code');
-            }
-        }
-
-        $response = $this->callApi(
-            'namedays',
-            [
-                'day'   => $date->day,
-                'month' => $date->month,
-            ]
-        )['data']['namedays'];
-
-        if (isset($countryCode)) {
-            $names['name_'.$countryCode] = $response[$countryCode];
-        } else {
-            foreach ($response as $key => $value) {
-                $names['name_'.$key] = $value;
-            }
-        }
-
-        $names['day'] = $date->day;
-        $names['month'] = $date->month;
-
-        return [
-            'data' => $names,
-        ];
-    }
+    return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+  }
 }

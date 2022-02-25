@@ -14,16 +14,13 @@ class GetTodayNamedayTest extends BaseTest
     {
         Carbon::setTestNow(Carbon::create(2021, 5, 28));
         $response = (new ApiNamedayClass())->today();
-        self::assertArrayHasKey('data', $response);
-        self::assertArrayHasKey('day', $response['data']);
-        self::assertArrayHasKey('month', $response['data']);
-        self::assertArrayHasKey('name_sk', $response['data']);
-        self::assertArrayHasKey('name_fi', $response['data']);
-        self::assertArrayHasKey('name_hu', $response['data']);
-        self::assertSame('Viliam', $response['data']['name_sk']);
-        self::assertSame('Alma', $response['data']['name_fi']);
-        self::assertSame(28, $response['data']['day']);
-        self::assertSame(5, $response['data']['month']);
+
+        self::assertArrayHasKey('day', $response);
+        self::assertArrayHasKey('month', $response);
+        self::assertArrayHasKey('nameday', $response);
+        self::assertSame('Spas, Spaska', $response['nameday']['bg']);
+        self::assertSame(28, $response['day']);
+        self::assertSame(5, $response['month']);
     }
 
     /** @test */
@@ -31,63 +28,11 @@ class GetTodayNamedayTest extends BaseTest
     {
         Carbon::setTestNow(Carbon::create(2021, 9, 2));
         $response = (new ApiNamedayClass())->today('ee');
-        self::assertArrayHasKey('data', $response);
-        self::assertArrayHasKey('day', $response['data']);
-        self::assertArrayHasKey('month', $response['data']);
-        self::assertArrayHasKey('name_ee', $response['data']);
-        self::assertArrayNotHasKey('name_sk', $response['data']);
-        self::assertArrayNotHasKey('name_fi', $response['data']);
-        self::assertArrayNotHasKey('name_hu', $response['data']);
-        self::assertSame('Maive, Maivi, Taive, Taivi', $response['data']['name_ee']);
-        self::assertSame(2, $response['data']['day']);
-        self::assertSame(9, $response['data']['month']);
-    }
-
-    /** @test */
-    public function getTodayWithAllCountriesCountryCode()
-    {
-        Carbon::setTestNow(Carbon::create(2021, 9, 2));
-        foreach (getAllSupportedCountries() as $item) {
-            $response = (new ApiNamedayClass())->today($item['countrycode']);
-            self::assertArrayHasKey('data', $response);
-            self::assertArrayHasKey('day', $response['data']);
-            self::assertArrayHasKey('month', $response['data']);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response['data']);
-            self::assertCount(3, $response['data']);
-            self::assertSame(2, $response['data']['day']);
-            self::assertSame(9, $response['data']['month']);
-        }
-    }
-
-    /** @test */
-    public function getTodayWithAllCountriesAlpha3()
-    {
-        Carbon::setTestNow(Carbon::create(2021, 9, 2));
-        foreach (getAllSupportedCountries() as $item) {
-            $response = (new ApiNamedayClass())->today($item['alpha3']);
-            self::assertArrayHasKey('data', $response);
-            self::assertArrayHasKey('day', $response['data']);
-            self::assertArrayHasKey('month', $response['data']);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response['data']);
-            self::assertCount(3, $response['data']);
-            self::assertSame(2, $response['data']['day']);
-            self::assertSame(9, $response['data']['month']);
-        }
-    }
-
-    /** @test */
-    public function getTodayWithAllCountriesWithName()
-    {
-        Carbon::setTestNow(Carbon::create(2021, 9, 2));
-        foreach (getAllSupportedCountries() as $item) {
-            $response = (new ApiNamedayClass())->today($item['name']);
-            self::assertArrayHasKey('data', $response);
-            self::assertArrayHasKey('day', $response['data']);
-            self::assertArrayHasKey('month', $response['data']);
-            self::assertArrayHasKey('name_'.$item['countrycode'], $response['data']);
-            self::assertCount(3, $response['data']);
-            self::assertSame(2, $response['data']['day']);
-            self::assertSame(9, $response['data']['month']);
-        }
+      self::assertArrayHasKey('day', $response);
+      self::assertArrayHasKey('month', $response);
+      self::assertArrayHasKey('nameday', $response);
+      self::assertSame('Maive, Maivi, Taive, Taivi', $response['nameday']['ee']);
+      self::assertSame(2, $response['day']);
+      self::assertSame(9, $response['month']);
     }
 }
