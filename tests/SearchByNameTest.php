@@ -8,6 +8,7 @@ class SearchByNameTest extends BaseTest
 {
     /**
      * @dataProvider invalidNameDataProvider
+     *
      * @test
      */
     public function invalidName(string $name)
@@ -30,6 +31,7 @@ class SearchByNameTest extends BaseTest
 
     /**
      * @dataProvider invalidCountryDataProvider
+     *
      * @test
      */
     public function invalidCountry(string $name, string $country)
