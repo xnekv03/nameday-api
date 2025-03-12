@@ -31,9 +31,9 @@ class ApiNamedayClass
             throw new \RuntimeException('Invalid timezone');
         }
 
-        try{
+        try {
             $this->carbonToday = Carbon::now($this->timeZone);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }
     }
@@ -72,7 +72,7 @@ class ApiNamedayClass
         $this->validateSearchName($name);
 
         return $this->callApi('getname', [
-          'name' => $name,
+            'name' => $name,
         ]);
     }
 
@@ -83,8 +83,8 @@ class ApiNamedayClass
     private function getSpecificDay(Carbon $date): array
     {
         return $this->callApi('date', [
-          'day' => $date->day,
-          'month' => $date->month,
+            'day'   => $date->day,
+            'month' => $date->month,
         ]);
     }
 
@@ -101,11 +101,11 @@ class ApiNamedayClass
      */
     private function callApi(string $url, array $data)
     {
-        try{
+        try {
             $response = (new Client())->request('POST', $this->baseUrl.$url, [
-              'json' => $data,
+                'json' => $data,
             ]);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             throw new InvalidArgumentException($e->getMessage());
         }
 
