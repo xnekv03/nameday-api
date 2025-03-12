@@ -13,22 +13,21 @@
   "authors": [
     {
       "name": "Vojtěch Nekvapil",
-      "email": "fby@post.cz",
+      "email": "dev@appfactory.cz",
       "role": "Developer"
     }
   ],
   "require": {
-    "php": "8.0.*|8.1.*",
+    "php": ">=8.2",
     "ext-json": "*",
-    "nesbot/carbon": "2.57.*",
-    "guzzlehttp/guzzle": "7.4.*",
-    "ext-http": "*"
+    "nesbot/carbon": "3.8.*",
+    "guzzlehttp/guzzle": "7.9.*"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.6",
-    "phpstan/phpstan": "^1.4",
+    "friendsofphp/php-cs-fixer": "^3.71",
+    "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^9",
-    "spatie/ray": "^1.33"
+    "spatie/ray": "^1.41"
   },
   "autoload": {
     "psr-4": {

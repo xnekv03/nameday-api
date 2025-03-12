@@ -3,16 +3,19 @@
 namespace Xnekv03\ApiNameday;
 
 use Carbon\Carbon;
+use DateTimeZone;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\InvalidArgumentException;
+use JsonException;
 use Xnekv03\ApiNameday\traits\ValidationTrait;
 
 class ApiNamedayClass
 {
     protected Carbon $carbonToday;
-    protected string $baseUrl = 'https://nameday.abalin.net/api/V1/';
-    protected string $timeZone = 'Europe/Prague';
+    protected string $timeZone;
+    protected string $baseUrl = 'https://nameday.abalin.net/api/V2/';
     use ValidationTrait;
 
     /**
@@ -22,14 +25,15 @@ class ApiNamedayClass
      */
     public function __construct(string $timeZone = null)
     {
-        if (!is_null($timeZone)) {
-            $this->timezoneValidation($timeZone);
-            $this->timeZone = $timeZone;
+        $this->timeZone = $timeZone ?? date_default_timezone_get();
+
+        if (!in_array($this->timeZone, DateTimeZone::listIdentifiers(), true)) {
+            throw new \RuntimeException('Invalid timezone');
         }
 
-        try {
+        try{
             $this->carbonToday = Carbon::now($this->timeZone);
-        } catch (Exception $e) {
+        }catch (Exception $e){
             throw new \RuntimeException($e->getMessage());
         }
     }
@@ -37,13 +41,9 @@ class ApiNamedayClass
     /**
      * @throws Exception
      */
-    public function today($countryCode = null): array
+    public function today(): array
     {
-        if (!is_null($countryCode)) {
-            $this->validateCountryCode($countryCode);
-        }
-
-        return $this->getSpecificDay($this->carbonToday, $countryCode);
+        return $this->getSpecificDay($this->carbonToday);
     }
 
     /**
@@ -51,82 +51,68 @@ class ApiNamedayClass
      */
     public function tomorrow($countryCode = null): array
     {
-        if (!is_null($countryCode)) {
-            $this->validateCountryCode($countryCode);
-        }
-
-        return $this->getSpecificDay($this->carbonToday->addDay(), $countryCode);
+        return $this->getSpecificDay($this->carbonToday->addDay());
     }
 
     /**
      * @throws Exception
      */
-    public function yesterday($countryCode = null): array
+    public function yesterday(): array
     {
-        if (!is_null($countryCode)) {
-            $this->validateCountryCode($countryCode);
-        }
-
-        return $this->getSpecificDay($this->carbonToday->subDay(), $countryCode);
+        return $this->getSpecificDay($this->carbonToday->subDay());
     }
 
     /**
      * @throws \JsonException
      * @throws Exception
+     * @throws GuzzleException
      */
-    public function searchByName(string $name, string $countryCode): array
+    public function searchByName(string $name): array
     {
-        $this->validateSearchName($name, $countryCode);
+        $this->validateSearchName($name);
 
         return $this->callApi('getname', [
-            'name'    => $name,
-            'country' => $countryCode,
+          'name' => $name,
         ]);
     }
 
-    private function getSpecificDay(Carbon $date, string $countryCode = null): array
+    /**
+     * @throws GuzzleException
+     * @throws JsonException
+     */
+    private function getSpecificDay(Carbon $date): array
     {
-        $parameters = [
-            'day'   => $date->day,
-            'month' => $date->month,
-        ];
+        return $this->callApi('date', [
+          'day' => $date->day,
+          'month' => $date->month,
+        ]);
+    }
 
-        if (!is_null($countryCode)) {
-            $parameters = array_merge($parameters, ['country' => $countryCode]);
-        }
+    public function specificDay(int $day, int $month): array
+    {
+        $this->validateDate($day, $month);
 
-        return $this->callApi('getdate', $parameters);
+        return $this->getSpecificDay(Carbon::create(year: 2000, month: $month, day: $day, timezone: $this->timeZone));
     }
 
     /**
-     * @param string $urlParameter
-     *
-     * @throws \JsonException
-     *
-     * @return array
+     * @throws GuzzleException
+     * @throws JsonException
      */
-    private function callApi(string $urlParameter, array $formParams = null): array
+    private function callApi(string $url, array $data)
     {
-        try {
-            $response = (new Client())->request('POST', $this->baseUrl.$urlParameter, [
-                'form_params' => $formParams ?? [],
+        try{
+            $response = (new Client())->request('POST', $this->baseUrl.$url, [
+              'json' => $data,
             ]);
-        } catch (Exception $e) {
+        }catch (Exception $e){
             throw new InvalidArgumentException($e->getMessage());
         }
 
         if ($response->getStatusCode() !== 200) {
-            throw new \RuntimeException('Unsuccessfull call');
+            throw new \RuntimeException('Unsuccessful call');
         }
 
         return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-    }
-
-    public function specificDay(int $day, int $month, string $countryCode): array
-    {
-        $this->validateCountryCode($countryCode);
-        $this->validateDate($day, $month);
-
-        return $this->getSpecificDay(Carbon::create(2000, $month, $day, 0, 0, 0, $this->timeZone), $countryCode);
     }
 }
