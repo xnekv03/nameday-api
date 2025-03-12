@@ -2,8 +2,6 @@
 
 namespace Xnekv03\ApiNameday\traits;
 
-use DateTimeZone;
-
 trait ValidationTrait
 {
     protected array $supportedCountries = [
@@ -44,7 +42,6 @@ trait ValidationTrait
             throw new \RuntimeException('Name must contain less then '.$max.' characters');
         }
     }
-
 
     /**
      * @throws \Exception
