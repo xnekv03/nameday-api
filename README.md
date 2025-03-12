@@ -1,7 +1,7 @@
 # Official International Name days API library
 
 
-<a href="#"><img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-no-action.svg"></a>
+<a href="https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi"><img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-no-action.svg"></a>
 ## Name day API library for [nameday.abalin.net](https://nameday.abalin.net)
 
 This library makes it easy to send requests towards [nameday.abalin.net](https://nameday.abalin.net) API. API provides name days for various
