@@ -3,7 +3,6 @@
 namespace Xnekv03\ApiNameday;
 
 use Carbon\Carbon;
-use DateTimeZone;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -25,9 +24,9 @@ class ApiNamedayClass
      */
     public function __construct(string $timeZone = null)
     {
-        try{
+        try {
             $this->carbonToday = Carbon::today($timeZone ?? date_default_timezone_get());
-        }catch (Exception $e){
+        } catch (Exception $e) {
             throw new \RuntimeException('Invalid timezone');
         }
 
@@ -68,7 +67,7 @@ class ApiNamedayClass
         $this->validateSearchName($name);
 
         return $this->callApi('getname', [
-          'name' => $name,
+            'name' => $name,
         ]);
     }
 
@@ -79,8 +78,8 @@ class ApiNamedayClass
     private function getSpecificDay(Carbon $date): array
     {
         return $this->callApi('date', [
-          'day' => $date->day,
-          'month' => $date->month,
+            'day'   => $date->day,
+            'month' => $date->month,
         ]);
     }
 
@@ -97,11 +96,11 @@ class ApiNamedayClass
      */
     private function callApi(string $url, array $data)
     {
-        try{
+        try {
             $response = (new Client())->request('POST', $this->baseUrl.$url, [
-              'json' => $data,
+                'json' => $data,
             ]);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             throw new InvalidArgumentException($e->getMessage());
         }
 
