@@ -22,7 +22,7 @@ class ApiNamedayClass
      *
      * @throws Exception
      */
-    public function __construct(string $timeZone = null)
+    public function __construct(?string $timeZone = null)
     {
         try {
             $this->carbonToday = Carbon::today($timeZone ?? date_default_timezone_get());
